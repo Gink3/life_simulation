@@ -40,7 +40,7 @@ impl World {
                 if rng.gen_range(0..100) < food_output{
                     food = rng.gen_range(1..6);
                 }
-                tmp_row.push(Tile::new(x,y,food));
+                tmp_row.push(Tile::new(food));
             }
             self.map.push(tmp_row);
         }

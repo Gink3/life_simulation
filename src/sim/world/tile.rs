@@ -8,17 +8,13 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Tile {
-    X: usize,
-    Y: usize,
     Ttype: String,
     FoodOutput: usize,
 }
 
 impl Tile {
-    pub fn new(xidx: usize,yidx: usize,fo:usize) -> Tile {
+    pub fn new(fo:usize) -> Tile {
         Tile {
-            X: xidx,
-            Y: yidx,
             Ttype: "Empty".to_string(),
             FoodOutput: fo,
         }
