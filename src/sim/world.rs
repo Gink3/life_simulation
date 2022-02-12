@@ -33,10 +33,10 @@ impl World {
         let mut rng = rand::thread_rng();
         
         // Creates tiles by row then appends row to 
-        for y in 0..ydim {
+        for _y in 0..ydim {
             let mut tmp_row = Vec::new();
-            for x in 0..xdim {
-                let mut food = 0 as usize;
+            for _x in 0..xdim {
+                let mut food = 0_usize;
                 if rng.gen_range(0..100) < food_output{
                     food = rng.gen_range(1..6);
                 }

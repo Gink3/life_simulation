@@ -5,7 +5,7 @@ mod sim;
 use sim::world::World;
 
 
-use std::fmt;
+
 
 fn main() -> std::io::Result<()> {
     let args: Vec<String> = env::args().collect();
