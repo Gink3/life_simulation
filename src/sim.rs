@@ -9,6 +9,9 @@ use person::Person;
 mod plant;
 use plant::Plant;
 
+mod animal;
+use animal::Animal;
+
 #[derive(Debug)]
 struct Sim<'a> {
     years: usize,
@@ -17,6 +20,7 @@ struct Sim<'a> {
     sim_world: World,
     people: Vec<Person<'a>>,
     plants: Vec<Plant>,
+    animals: Vec<Animal>,
 }
 
 impl Sim<'_> {
@@ -28,7 +32,7 @@ impl Sim<'_> {
             sim_world: World::new(10,10,40),
             people: Vec::<Person>::new(),
             plants: Vec::<Plant>::new(),
-            //animals: Vec::<Animal>::new(),
+            animals: Vec::<Animal>::new(),
         }
     }
 }
