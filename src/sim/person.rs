@@ -9,17 +9,17 @@ type Message = (usize,String);
 
 #[derive(Debug)]
 pub struct Person<'a> {
-    Pid: usize,
-    Generation: usize,
-    Score: i64,
-    FirstName: String,
-    LastName: String,
-    Birthyear: usize,
-    Birthday: usize,
-    X: usize,
-    Y: usize,
-    Spouse: &'a Person<'a>,
-    Gender: Gender,
+    pid: usize,
+    generation: usize,
+    score: i64,
+    first_name: String,
+    last_name: String,
+    birthyear: usize,
+    birthday: usize,
+    x: usize,
+    y: usize,
+    spouse: &'a Person<'a>,
+    gender: Gender,
 }
 
 impl Person<'static> {
