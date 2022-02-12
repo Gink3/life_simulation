@@ -1,11 +1,14 @@
 
+#[derive(Debug)]
 enum Gender {
     Male,
     Female,
 }
 
+type Message = (usize,String);
+
 #[derive(Debug)]
-struct Person {
+pub struct Person<'a> {
     Pid: usize,
     Generation: usize,
     Score: i64,
@@ -15,11 +18,10 @@ struct Person {
     Birthday: usize,
     X: usize,
     Y: usize,
-    Spouse: &Person,
+    Spouse: &'a Person<'a>,
     Gender: Gender,
-    Msg
 }
 
-impl Person {
+impl Person<'static> {
 
 }
