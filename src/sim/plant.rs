@@ -5,6 +5,7 @@ pub struct Plant {
     species: String,
     edible: bool,
     servings: usize,
+    can_move_through: bool,
 }
 
 impl Plant {
@@ -13,6 +14,7 @@ impl Plant {
             species: "Berry Bush".to_string(),
             edible: true,
             servings: 4,
+            can_move_through: false,
         }
     }
 

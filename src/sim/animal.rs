@@ -8,7 +8,7 @@ enum Size {
     XS,
 }
 
-use crate::sim::animal::Size::*;
+
 
 #[derive(Debug,Clone)]
 pub struct Animal {
