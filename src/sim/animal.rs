@@ -25,7 +25,7 @@ impl Animal {
             species: "Rabbit".to_string(),
             health: 5,
             hunger: 100,
-            size: S,
+            size: Size::S,
         }
     }
     pub fn wolf() -> Animal {
@@ -33,7 +33,7 @@ impl Animal {
             species: "Wolf".to_string(),
             health: 20,
             hunger: 100,
-            size: M,
+            size: Size::M,
         }
     }
     pub fn get_species(self) -> String {
