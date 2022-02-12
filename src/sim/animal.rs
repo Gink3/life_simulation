@@ -53,4 +53,11 @@ mod tests {
         assert_eq!(r.get_species(),"Rabbit".to_string());
     }
 
+    #[test]
+    fn is_wolf() {
+        let w = Animal::wolf();
+
+        assert_eq!(w.get_species(),"Wolf".to_string());
+    }
+
 }
