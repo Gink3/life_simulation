@@ -6,13 +6,17 @@ use crate::sim::world::World;
 mod person;
 use person::Person;
 
+mod plant;
+use plant::Plant;
+
 #[derive(Debug)]
 struct Sim<'a> {
     years: usize,
     days: usize,
     score: i64,
     sim_world: World,
-    people: Vec<Person<'a>>
+    people: Vec<Person<'a>>,
+    plants: Vec<Plant>,
 }
 
 impl Sim<'_> {
@@ -22,7 +26,9 @@ impl Sim<'_> {
             days: 0,
             score: 0,
             sim_world: World::new(10,10,40),
-            people: Vec::<Person>::new()
+            people: Vec::<Person>::new(),
+            plants: Vec::<Plant>::new(),
+            //animals: Vec::<Animal>::new(),
         }
     }
 }
