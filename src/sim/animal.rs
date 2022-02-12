@@ -36,5 +36,21 @@ impl Animal {
             size: M,
         }
     }
+    pub fn get_species(self) -> String {
+        self.species
+    }
+
+}
+
+#[cfg(test)]
+mod tests {
+    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    use super::*;
+    #[test]
+    fn is_rabbit() {
+        let r = Animal::rabbit();
+
+        assert_eq!(r.get_species(),"Rabbit".to_string());
+    }
 
 }
