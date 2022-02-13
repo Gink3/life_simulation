@@ -48,7 +48,7 @@ impl Sim {
         fs::write("sim_debug.ron",serialized).expect("Unable to write file")
     }
     // writes the simulation as a json file
-    pub fn sim_debug_ron(&self) {
+    pub fn sim_debug_json(&self) {
         let serialized = serde_json::to_string_pretty(&self).unwrap();
         fs::write("sim_debug.json".to_string(),serialized).expect("Unable to write file")
     }
