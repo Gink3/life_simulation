@@ -42,8 +42,14 @@ impl Sim {
             animals: Vec::<Animal>::new(),
         }
     }
-    pub fn sim_debug_ron(&self,filename: String) {
+    // writes the simulation as a ron file
+    pub fn sim_debug_ron(&self) {
         let serialized = ron::to_string(&self).unwrap();
-        fs::write(filename,serialized).expect("Unable to write file")
+        fs::write("sim_debug.ron",serialized).expect("Unable to write file")
+    }
+    // writes the simulation as a json file
+    pub fn sim_debug_ron(&self) {
+        let serialized = serde_json::to_string_pretty(&self).unwrap();
+        fs::write("sim_debug.json".to_string(),serialized).expect("Unable to write file")
     }
 }

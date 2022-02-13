@@ -15,7 +15,7 @@ fn main() -> std::io::Result<()> {
 
     let s = Sim::new(Config::new());
 
-    s.sim_debug_ron("sim_test.ron".to_string());
+    s.sim_debug_json();
     
     Ok(())
 }

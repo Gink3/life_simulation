@@ -1,8 +1,5 @@
 
-//
-//
-//
-//
+// Holds options for simulation details
 #[derive(Debug,Copy,Clone)]
 pub struct Config {
     xdim: usize,
