@@ -1,5 +1,7 @@
 
-#[derive(Debug,Clone)]
+use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize, Debug,Clone)]
 enum Size {
     XL,
     L,
@@ -10,7 +12,7 @@ enum Size {
 
 
 
-#[derive(Debug,Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Animal {
     species: String,
     health: i32,

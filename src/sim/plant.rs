@@ -1,6 +1,8 @@
 
 
-#[derive(Debug,Clone)]
+use serde::{Serialize, Deserialize};
+
+#[derive(Debug,Clone,Serialize,Deserialize)]
 pub struct Plant {
     species: String,
     edible: bool,

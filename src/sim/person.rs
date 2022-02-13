@@ -1,5 +1,7 @@
 
-#[derive(Debug)]
+use serde::{Serialize, Deserialize};
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 enum Gender {
     Male,
     Female,
@@ -7,8 +9,8 @@ enum Gender {
 
 type Message = (usize,String);
 
-#[derive(Debug)]
-pub struct Person<'a> {
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Person {
     pid: usize,
     generation: usize,
     score: i64,
@@ -18,10 +20,10 @@ pub struct Person<'a> {
     birthday: usize,
     x: usize,
     y: usize,
-    spouse: &'a Person<'a>,
+    spouse_pid: usize,
     gender: Gender,
 }
 
-impl Person<'static> {
+impl Person {
 
 }
