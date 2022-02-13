@@ -32,7 +32,7 @@ pub struct Sim {
 
 impl Sim {
     pub fn new(c:Config) -> Sim {
-        Sim {
+        let mut s = Sim {
             years: 0,
             days: 0,
             score: 0,
@@ -40,7 +40,12 @@ impl Sim {
             people: Vec::<Person>::new(),
             plants: Vec::<Plant>::new(),
             animals: Vec::<Animal>::new(),
+        };
+        for count in 0..c.get_sp() {
+            s.people.push(Person::new(s.people.len()));
         }
+
+        s
     }
     // writes the simulation as a ron file
     pub fn sim_debug_ron(&self) {
