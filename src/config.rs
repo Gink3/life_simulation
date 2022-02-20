@@ -4,16 +4,14 @@
 pub struct Config {
     xdim: usize,
     ydim: usize,
-    food_scarcity: usize,
     starting_people: usize,
 }
 
 impl Config {
     pub fn new() -> Config {
         Config {
-            xdim: 10,
-            ydim: 10,
-            food_scarcity: 40,
+            xdim: 2000,
+            ydim: 2000,
             starting_people: 10,
         }
     }
@@ -22,9 +20,6 @@ impl Config {
     }
     pub fn get_ydim(self) -> usize {
         self.ydim
-    }
-    pub fn get_fs(self) -> usize {
-        self.food_scarcity
     }
     pub fn get_sp(self) -> usize {
         self.starting_people
