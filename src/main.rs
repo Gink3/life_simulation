@@ -2,7 +2,6 @@
 use std::env;
 
 mod sim;
-use sim::world::World;
 use crate::sim::Sim;
 
 pub mod config;
