@@ -62,7 +62,7 @@ impl World {
         // Create image buffer
         let mut img = RgbImage::new(xdim as u32, ydim as u32);
 
-        let water_cutoff = 0.005;
+        let water_cutoff = 0.008;
         let grass_cutoff = 0.4;
 
         // Creates tiles by row then appends row to 
