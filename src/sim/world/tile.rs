@@ -16,26 +16,25 @@ enum Tile_type {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Tile {
     ttype: Tile_type,
-    food_output: usize,
 }
 
 impl Tile {
-    pub fn water(fo:usize) -> Tile {
+    pub fn water() -> Tile {
         Tile {
             ttype: Tile_type::WATER,
-            food_output: fo,
+            
         }
     }
-    pub fn grass(fo:usize) -> Tile {
+    pub fn grass() -> Tile {
         Tile {
             ttype: Tile_type::GRASS,
-            food_output: fo,
+            
         }
     }    
-    pub fn mountain(fo:usize) -> Tile {
+    pub fn mountain() -> Tile {
         Tile {
             ttype: Tile_type::MOUNTAIN,
-            food_output: fo,
+            
         }
     }    
 }
