@@ -37,10 +37,12 @@ impl World {
             let mut tmp_row = Vec::new();
             for _x in 0..xdim {
                 let mut food = 0_usize;
+                /*
                 if rng.gen_range(0..100) < food_output{
                     food = rng.gen_range(1..6);
                 }
-                tmp_row.push(Tile::water(food));
+                */
+                tmp_row.push(Tile::water());
             }
             self.map.push(tmp_row);
         }
