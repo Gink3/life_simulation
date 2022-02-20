@@ -8,7 +8,7 @@ use serde::{Serialize, Deserialize};
 
 // tile types
 #[derive(Serialize, Deserialize, Debug)]
-enum Tile_type {
+enum TileType {
     WATER,
     GRASS,
     MOUNTAIN,
@@ -20,26 +20,26 @@ enum Tile_type {
 // solid --> whether something can move through that tile
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Tile {
-    ttype: Tile_type,
+    ttype: TileType,
     solid: bool,
 }
 
 impl Tile {
     pub fn water() -> Tile {
         Tile {
-            ttype: Tile_type::WATER,
+            ttype: TileType::WATER,
             solid: false,
         }
     }
     pub fn grass() -> Tile {
         Tile {
-            ttype: Tile_type::GRASS,
+            ttype: TileType::GRASS,
             solid: false,
         }
     }    
     pub fn mountain() -> Tile {
         Tile {
-            ttype: Tile_type::MOUNTAIN,
+            ttype: TileType::MOUNTAIN,
             solid: true,
         }
     }    

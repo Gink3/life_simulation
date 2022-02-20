@@ -36,23 +36,25 @@ impl Sim {
             years: 0,
             days: 0,
             score: 0,
-            sim_world: World::new(c.get_xdim(),c.get_ydim(),c.get_fs()),
+            sim_world: World::new(c.get_xdim(),c.get_ydim()),
             people: Vec::<Person>::new(),
             plants: Vec::<Plant>::new(),
             animals: Vec::<Animal>::new(),
         };
-        for count in 0..c.get_sp() {
+        for _count in 0..c.get_sp() {
             s.people.push(Person::new(s.people.len()));
         }
 
         s
     }
     // writes the simulation as a ron file
+    #[allow(dead_code)]
     pub fn sim_debug_ron(&self) {
         let serialized = ron::to_string(&self).unwrap();
         fs::write("sim_debug.ron",serialized).expect("Unable to write file")
     }
     // writes the simulation as a json file
+    #[allow(dead_code)]
     pub fn sim_debug_json(&self) {
         let serialized = serde_json::to_string_pretty(&self).unwrap();
         fs::write("sim_debug.json".to_string(),serialized).expect("Unable to write file")

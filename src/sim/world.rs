@@ -26,11 +26,11 @@ pub struct World {
 }
 
 impl World {
-    pub fn new(xdim: usize, ydim: usize, food_output: usize) -> World {
+    pub fn new(xdim: usize, ydim: usize) -> World {
         let mut w = World {
             map: Vec::<Vec::<Tile>>::new(),
         };
-        w.initalize(xdim,ydim,food_output);
+        w.initalize(xdim,ydim);
         w
     }
     // initalizes the map with tiles
@@ -39,12 +39,12 @@ impl World {
     // xdim - x dimension of map
     // ydim - y dimension of map
     // food_output - food scarcity percentage
-    pub fn initalize(&mut self,xdim: usize,ydim: usize, food_output: usize)  {
+    pub fn initalize(&mut self,xdim: usize,ydim: usize)  {
         // initialize rng
         let mut rng = rand::thread_rng();
         
         // initialize perlin noise generators
-        let perlin = Perlin::new().set_seed(rng.gen());
+        // let perlin = Perlin::new().set_seed(rng.gen());
 
         // Optional fbm noise generator
         let fbm = Fbm::new().set_seed(rng.gen());
@@ -62,6 +62,9 @@ impl World {
         // Create image buffer
         let mut img = RgbImage::new(xdim as u32, ydim as u32);
 
+        let water_cutoff = 0.005;
+        let grass_cutoff = 0.4;
+
         // Creates tiles by row then appends row to 
         for y in 0..ydim {
             let mut tmp_row = Vec::new();
@@ -70,15 +73,15 @@ impl World {
 
                 // Iterates over noise map
                 // set water
-                if v <= 0.005 {
+                if v <= water_cutoff {
                     img.put_pixel(x as u32,y as u32,Rgb([0,0,255]));
                     tmp_row.push(Tile::water());
                 // set grass
-                } else if v > 0.005 && v <= 0.4 {
+                } else if v > water_cutoff && v <= grass_cutoff {
                     img.put_pixel(x as u32,y as u32,Rgb([64, 133, 52]));
                     tmp_row.push(Tile::grass());
                 // set mountain
-                } else if v > 0.4 {
+                } else if v > grass_cutoff {
                     img.put_pixel(x as u32,y as u32,Rgb([127,141,163]));
                     tmp_row.push(Tile::mountain());
                 }
@@ -87,6 +90,7 @@ impl World {
         }
         img.save("sim_out\\world.png");
     }
+    #[allow(dead_code)]
     pub fn serialize_world(&self,filename: String) {
         //let mut file = File::open(filename);
         let serialized = serde_json::to_string_pretty(&self.map).unwrap();
