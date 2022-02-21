@@ -10,8 +10,10 @@ use serde::{Serialize, Deserialize};
 #[derive(Serialize, Deserialize, Debug)]
 enum TileType {
     WATER,
+    BEACH,
     GRASS,
     MOUNTAIN,
+    TALL_MOUNTAIN,
 }
 
 
@@ -31,6 +33,12 @@ impl Tile {
             solid: false,
         }
     }
+    pub fn beach() -> Tile {
+        Tile {
+            ttype: TileType::MOUNTAIN,
+            solid: false,
+        }
+    }
     pub fn grass() -> Tile {
         Tile {
             ttype: TileType::GRASS,
@@ -42,5 +50,11 @@ impl Tile {
             ttype: TileType::MOUNTAIN,
             solid: true,
         }
-    }    
+    }
+    pub fn tall_mountain() -> Tile {
+        Tile {
+            ttype: TileType::MOUNTAIN,
+            solid: true,
+        }
+    }
 }

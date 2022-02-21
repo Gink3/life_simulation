@@ -63,7 +63,9 @@ impl World {
         let mut img = RgbImage::new(xdim as u32, ydim as u32);
 
         let water_cutoff = 0.008;
-        let grass_cutoff = 0.4;
+        let beach_cutoff = 0.015;
+        let grass_cutoff = 0.35;
+        let mountain_cutoff = 0.5;
 
         // Creates tiles by row then appends row to 
         for y in 0..ydim {
@@ -76,15 +78,24 @@ impl World {
                 if v <= water_cutoff {
                     img.put_pixel(x as u32,y as u32,Rgb([0,0,255]));
                     tmp_row.push(Tile::water());
+                // set beach
+                } else if v > water_cutoff && v <= beach_cutoff  {
+                    img.put_pixel(x as u32,y as u32,Rgb([252,225,149]));
+                    tmp_row.push(Tile::beach());
                 // set grass
-                } else if v > water_cutoff && v <= grass_cutoff {
+                } else if v > beach_cutoff && v <= grass_cutoff {
                     img.put_pixel(x as u32,y as u32,Rgb([64, 133, 52]));
                     tmp_row.push(Tile::grass());
                 // set mountain
-                } else if v > grass_cutoff {
+                } else if v > grass_cutoff && v <= mountain_cutoff {
                     img.put_pixel(x as u32,y as u32,Rgb([127,141,163]));
                     tmp_row.push(Tile::mountain());
+                // set tall mountain
+                } else {
+                    img.put_pixel(x as u32,y as u32,Rgb([46,45,44]));
+                    tmp_row.push(Tile::tall_mountain());
                 }
+
             }
             self.map.push(tmp_row);
         }
