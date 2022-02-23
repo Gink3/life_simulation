@@ -62,6 +62,8 @@ impl World {
         // Create image buffer
         let mut img = RgbImage::new(xdim as u32, ydim as u32);
 
+        // various cutoff values of the noise to define the levels at which each
+        // type of tile is initially generated
         let water_cutoff = 0.008;
         let beach_cutoff = 0.015;
         let grass_cutoff = 0.35;
@@ -97,10 +99,12 @@ impl World {
                 }
 
             }
+            // Appends row to map vector
             self.map.push(tmp_row);
         }
         img.save("sim_out\\world.png");
     }
+    // Debug function to output the world in json format
     #[allow(dead_code)]
     pub fn serialize_world(&self,filename: String) {
         //let mut file = File::open(filename);
