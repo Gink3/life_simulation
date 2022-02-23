@@ -22,6 +22,9 @@ use std::fs::File;
 use std::io::BufReader;
 use std::path::Path;
 
+// num formatter
+use num_format::{Locale, ToFormattedString};
+
 // internal modules
 mod tile;
 use crate::sim::world::tile::Tile;
@@ -29,12 +32,20 @@ use crate::sim::world::tile::Tile;
 #[derive(Serialize, Deserialize, Debug)]
 pub struct World {    
     map: Vec<Vec<Tile>>,
+    total_tiles: usize,
+    water_count: usize,
+    grass_count: usize,
+    mountain_count: usize,
 }
 
 impl World {
     pub fn new(xdim: usize, ydim: usize,file: String) -> World {
         let mut w = World {
             map: Vec::<Vec::<Tile>>::new(),
+            total_tiles: ydim * xdim,
+            water_count: 0,
+            grass_count: 0,
+            mountain_count: 0,
         };
         w.initalize(xdim,ydim,file);
         w
@@ -86,18 +97,25 @@ impl World {
                 if v <= water_cutoff {
                     img.put_pixel(x as u32,y as u32,Rgb([0,0,255]));
                     tmp_row.push(Tile::water());
+                    self.water_count+=1;
+
                 // set beach
                 } else if v > water_cutoff && v <= beach_cutoff  {
                     img.put_pixel(x as u32,y as u32,Rgb([252,225,149]));
                     tmp_row.push(Tile::beach());
+
                 // set grass
                 } else if v > beach_cutoff && v <= grass_cutoff {
                     img.put_pixel(x as u32,y as u32,Rgb([64, 133, 52]));
                     tmp_row.push(Tile::grass());
+                    self.grass_count+=1;
+
                 // set mountain
                 } else if v > grass_cutoff && v <= mountain_cutoff {
                     img.put_pixel(x as u32,y as u32,Rgb([127,141,163]));
                     tmp_row.push(Tile::mountain());
+                    self.mountain_count+=1;
+
                 // set tall mountain
                 } else {
                     img.put_pixel(x as u32,y as u32,Rgb([46,45,44]));
@@ -112,7 +130,24 @@ impl World {
             Ok(_v) => (),
             Err(e) => println!("{:?}",e),
         };
+        self.print_stats();
     }
+    // Outputs world tile statistics
+    fn print_stats(&self) {
+        let readable_tt = self.total_tiles.to_formatted_string(&Locale::en);
+        println!("Total tiles: {}", readable_tt);
+
+        let water_per = (self.water_count as f32 / self.total_tiles as f32) * 100.0;
+        println!("Water tile count: {} \t Water Percentage: {:.2}",
+            self.water_count.to_formatted_string(&Locale::en),
+            water_per);
+        
+        let grass_per = (self.grass_count as f32 / self.total_tiles as f32) * 100.0;
+        println!("Grass tile count: {} \t Grass Percentage: {:.2}",
+            self.grass_count.to_formatted_string(&Locale::en),
+            grass_per );
+    }
+
     // Loads a serialized json world for repeating
     // simulations on the same world 
     // From https://docs.serde.rs/serde_json/de/fn.from_reader.html
