@@ -10,7 +10,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  Unit Tests:
+  Unit-Tests:
 
     runs-on: ubuntu-latest
 
