@@ -10,8 +10,8 @@ pub struct Config {
 impl Config {
     pub fn new() -> Config {
         Config {
-            xdim: 2000,
-            ydim: 2000,
+            xdim: 10000,
+            ydim: 10000,
             starting_people: 10,
         }
     }
