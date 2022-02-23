@@ -22,6 +22,7 @@ pub struct Person {
     y: usize,
     spouse_pid: isize,
     gender: Gender,
+    message_log: Vec<Message>,
 }
 
 impl Person {
@@ -38,6 +39,7 @@ impl Person {
             y: 0,
             spouse_pid: -1,
             gender: Gender::Male,
+            message_log: Vec::<Message>::new(),
         }
     }
 }
