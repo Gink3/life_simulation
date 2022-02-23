@@ -42,7 +42,7 @@ fn main() -> std::io::Result<()> {
 
         // Generates new world
         } else {
-            _s = Sim::new(Config::new_world("sim_out\\world.png".to_string()));
+            _s = Sim::new(Config::new_world("sim_out\\world".to_string()));
         }
         
         // Calculate and print time elapsed
