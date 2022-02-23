@@ -50,7 +50,7 @@ impl Sim {
                 years: 0,
                 days: 0,
                 score: 0,
-                sim_world: World::new(c.get_xdim(),c.get_ydim()),
+                sim_world: World::new(c.get_xdim(),c.get_ydim(),c.get_world_filename().to_string()),
                 people: Vec::<Person>::new(),
                 plants: Vec::<Plant>::new(),
                 animals: Vec::<Animal>::new(),

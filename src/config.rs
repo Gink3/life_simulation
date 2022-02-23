@@ -11,13 +11,13 @@ pub struct Config {
 
 impl Config {
     // Config for creating a new world
-    pub fn new_world() -> Config {
+    pub fn new_world(filename: String) -> Config {
         Config {
             xdim: 100,
             ydim: 100,
             starting_people: 10,
             load_world: false,
-            world_file: String::new(),
+            world_file: filename,
         }
     }
     // Config for loading a previous world

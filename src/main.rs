@@ -8,12 +8,24 @@ use crate::sim::Sim;
 pub mod config;
 use config::Config;
 
+use sim::world::World;
+
 fn main() -> std::io::Result<()> {
     // process command line arguments
     let args: Vec<String> = env::args().collect();
     println!("Args -> {:?}",args.len());
 
-    let s: Sim;
+    let _s: Sim;
+
+    // Generates worlds to look at and store without running a simulation
+    if args[1] == "--gen-world" {
+        let filename = &args[2];
+        let c = Config::new_world(filename.to_string());
+        let w = World::new(c.get_xdim(),c.get_ydim(),c.get_world_filename().to_string());
+        w.serialize_world(filename.to_string());
+
+        return Ok(());
+    }
 
     // benchmarking feature check
     if cfg!(feature = "benchmarking") {
@@ -25,11 +37,11 @@ fn main() -> std::io::Result<()> {
             let filename = &args[idx+1];
             
             //Initalizes sim with saved world
-            s = Sim::new(Config::load_world(filename.to_string()));
+            _s = Sim::new(Config::load_world(filename.to_string()));
 
         // Generates new world
         } else {
-            s = Sim::new(Config::new_world());
+            _s = Sim::new(Config::new_world("sim_out\\world.png".to_string()));
         }
         
         // Calculate and print time elapsed
@@ -43,10 +55,10 @@ fn main() -> std::io::Result<()> {
             let idx = args.iter().position(|r| r=="load-world").unwrap();
             let filename = &args[idx+1];
 
-            s = Sim::new(Config::load_world(filename.to_string()));
+            _s = Sim::new(Config::load_world(filename.to_string()));
         // Generates new world
         } else {
-            s = Sim::new(Config::new_world());
+            _s = Sim::new(Config::new_world("sim_out\\world.png".to_string()));
         }
     }
 

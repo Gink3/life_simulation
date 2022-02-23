@@ -32,11 +32,11 @@ pub struct World {
 }
 
 impl World {
-    pub fn new(xdim: usize, ydim: usize) -> World {
+    pub fn new(xdim: usize, ydim: usize,file: String) -> World {
         let mut w = World {
             map: Vec::<Vec::<Tile>>::new(),
         };
-        w.initalize(xdim,ydim);
+        w.initalize(xdim,ydim,file);
         w
     }
     // initalizes the map with tiles
@@ -45,7 +45,7 @@ impl World {
     // xdim - x dimension of map
     // ydim - y dimension of map
     // food_output - food scarcity percentage
-    pub fn initalize(&mut self,xdim: usize,ydim: usize)  {
+    pub fn initalize(&mut self,xdim: usize,ydim: usize,filename:String)  {
         // initialize rng
         let mut rng = rand::thread_rng();
         
@@ -108,7 +108,10 @@ impl World {
             // Appends row to map vector
             self.map.push(tmp_row);
         }
-        img.save("sim_out\\world.png");
+        match img.save(filename + ".png") {
+            Ok(_v) => (),
+            Err(e) => println!("{:?}",e),
+        };
     }
     // Loads a serialized json world for repeating
     // simulations on the same world 
@@ -124,9 +127,11 @@ impl World {
     // Debug function to output the world in json format
     #[allow(dead_code)]
     pub fn serialize_world(&self,filename: String) {
-        //let mut file = File::open(filename);
+        // append json file extension
+        let json_fn = filename + ".json";
+        // let mut file = File::open(filename);
         let serialized = serde_json::to_string_pretty(&self.map).unwrap();
-        fs::write(filename, serialized).expect("Unable to write file");
+        fs::write(json_fn, serialized).expect("Unable to write file");
     }
     
 }
