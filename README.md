@@ -25,3 +25,7 @@ config.rs -> simulation config for managing simulation options
 ## Playing around with the simulation
 To play with the simulation options change attributes in the config.rs
 Then recompile
+
+### Generating a world
+To generate a world without running a simulation use
+`--gen-world <file name>`
