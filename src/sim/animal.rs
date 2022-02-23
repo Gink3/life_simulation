@@ -22,6 +22,7 @@ pub struct Animal {
 }
 
 impl Animal {
+    #[allow(dead_code)]
     pub fn rabbit() -> Animal {
         Animal {
             species: "Rabbit".to_string(),
@@ -30,6 +31,7 @@ impl Animal {
             size: Size::S,
         }
     }
+    #[allow(dead_code)]
     pub fn wolf() -> Animal {
         Animal {
             species: "Wolf".to_string(),
@@ -38,6 +40,7 @@ impl Animal {
             size: Size::M,
         }
     }
+    #[allow(dead_code)]
     pub fn get_species(self) -> String {
         self.species
     }

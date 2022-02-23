@@ -11,6 +11,7 @@ pub struct Plant {
 }
 
 impl Plant {
+    #[allow(dead_code)]
     pub fn berry_bush() -> Plant {
         Plant {
             species: "Berry Bush".to_string(),
@@ -19,7 +20,7 @@ impl Plant {
             can_move_through: false,
         }
     }
-
+    #[allow(dead_code)]
     pub fn get_species(self) -> String {
         self.species
     }
