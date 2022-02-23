@@ -13,7 +13,7 @@ enum TileType {
     BEACH,
     GRASS,
     MOUNTAIN,
-    TALL_MOUNTAIN,
+    TallMountain,
 }
 
 
@@ -53,7 +53,7 @@ impl Tile {
     }
     pub fn tall_mountain() -> Tile {
         Tile {
-            ttype: TileType::MOUNTAIN,
+            ttype: TileType::TallMountain,
             solid: true,
         }
     }

@@ -8,13 +8,19 @@ use serde::{Serialize, Deserialize};
 
 // Perlin noise libraries
 use noise::Fbm;
-use noise::Perlin;
+// use noise::Perlin;
 use noise::utils::PlaneMapBuilder;
 use noise::utils::NoiseMapBuilder;
 use noise::Seedable;
 
 // Image libraries
 use image::{RgbImage, Rgb};
+
+// File io
+use std::error::Error;
+use std::fs::File;
+use std::io::BufReader;
+use std::path::Path;
 
 // internal modules
 mod tile;
@@ -103,6 +109,17 @@ impl World {
             self.map.push(tmp_row);
         }
         img.save("sim_out\\world.png");
+    }
+    // Loads a serialized json world for repeating
+    // simulations on the same world 
+    // From https://docs.serde.rs/serde_json/de/fn.from_reader.html
+    pub fn load_world<P: AsRef<Path>>(path: P) -> Result<World,Box<dyn Error>>{
+        let file = File::open(path)?;
+        let reader = BufReader::new(file);
+
+        let u = serde_json::from_reader(reader)?;
+
+        Ok(u)
     }
     // Debug function to output the world in json format
     #[allow(dead_code)]

@@ -32,15 +32,31 @@ pub struct Sim {
 
 impl Sim {
     pub fn new(c:Config) -> Sim {
-        let mut s = Sim {
-            years: 0,
-            days: 0,
-            score: 0,
-            sim_world: World::new(c.get_xdim(),c.get_ydim()),
-            people: Vec::<Person>::new(),
-            plants: Vec::<Plant>::new(),
-            animals: Vec::<Animal>::new(),
-        };
+        let mut s: Sim;
+        // Load world sim
+        if c.will_load_world() {
+            s = Sim {
+                years: 0,
+                days: 0,
+                score: 0,
+                sim_world: World::load_world(c.get_world_filename()).unwrap(),
+                people: Vec::<Person>::new(),
+                plants: Vec::<Plant>::new(),
+                animals: Vec::<Animal>::new(),
+            };
+        // Generate new world sim
+        } else {
+            s = Sim {
+                years: 0,
+                days: 0,
+                score: 0,
+                sim_world: World::new(c.get_xdim(),c.get_ydim()),
+                people: Vec::<Person>::new(),
+                plants: Vec::<Plant>::new(),
+                animals: Vec::<Animal>::new(),
+            };
+        }
+        // Generates people into person vector
         for _count in 0..c.get_sp() {
             s.people.push(Person::new(s.people.len()));
         }
