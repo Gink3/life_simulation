@@ -31,21 +31,21 @@ use crate::sim::world::tile::Tile;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct World {    
-    map: Vec<Vec<Tile>>,
     total_tiles: usize,
     water_count: usize,
     grass_count: usize,
     mountain_count: usize,
+    map: Vec<Vec<Tile>>,
 }
 
 impl World {
     pub fn new(xdim: usize, ydim: usize,file: String) -> World {
         let mut w = World {
-            map: Vec::<Vec::<Tile>>::new(),
             total_tiles: ydim * xdim,
             water_count: 0,
             grass_count: 0,
             mountain_count: 0,
+            map: Vec::<Vec::<Tile>>::new(),
         };
         w.initalize(xdim,ydim,file);
         w
@@ -165,7 +165,7 @@ impl World {
         // append json file extension
         let json_fn = filename + ".json";
         // let mut file = File::open(filename);
-        let serialized = serde_json::to_string_pretty(&self.map).unwrap();
+        let serialized = serde_json::to_string_pretty(&self).unwrap();
         fs::write(json_fn, serialized).expect("Unable to write file");
     }
     
