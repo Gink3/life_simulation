@@ -9,10 +9,10 @@ use serde::{Serialize, Deserialize};
 // tile types
 #[derive(Serialize, Deserialize, Debug)]
 enum TileType {
-    WATER,
-    BEACH,
-    GRASS,
-    MOUNTAIN,
+    Water,
+    Beach,
+    Grass,
+    Mountain,
     TallMountain,
 }
 
@@ -29,25 +29,25 @@ pub struct Tile {
 impl Tile {
     pub fn water() -> Tile {
         Tile {
-            ttype: TileType::WATER,
+            ttype: TileType::Water,
             solid: false,
         }
     }
     pub fn beach() -> Tile {
         Tile {
-            ttype: TileType::MOUNTAIN,
+            ttype: TileType::Beach,
             solid: false,
         }
     }
     pub fn grass() -> Tile {
         Tile {
-            ttype: TileType::GRASS,
+            ttype: TileType::Grass,
             solid: false,
         }
     }    
     pub fn mountain() -> Tile {
         Tile {
-            ttype: TileType::MOUNTAIN,
+            ttype: TileType::Mountain,
             solid: true,
         }
     }

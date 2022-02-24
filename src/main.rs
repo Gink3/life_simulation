@@ -18,15 +18,13 @@ fn main() -> std::io::Result<()> {
     let _s: Sim;
 
     // Generates worlds to look at and store without running a simulation
-    if !(args.len() < 3) {
-        if args[1] == "--gen-world" {
-            let filename = &args[2];
-            let c = Config::new_world(filename.to_string());
-            let w = World::new(c.get_xdim(),c.get_ydim(),c.get_world_filename().to_string());
-            w.serialize_world(filename.to_string());
+    if args.len() >= 3 && args[1] == "--gen-world" {
+        let filename = &args[2];
+        let c = Config::new_world(filename.to_string());
+        let w = World::new(c.get_xdim(),c.get_ydim(),c.get_world_filename().to_string());
+        w.serialize_world(filename.to_string());
 
-            return Ok(());
-        }
+        return Ok(());
     }
     // benchmarking feature check
     if cfg!(feature = "benchmarking") {
