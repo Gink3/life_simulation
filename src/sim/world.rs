@@ -26,11 +26,14 @@ use std::path::Path;
 use num_format::{Locale, ToFormattedString};
 
 // internal modules
-mod tile;
+pub(crate) mod tile;
 use crate::sim::world::tile::Tile;
+use crate::sim::world::tile::TileType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct World {    
+    x_dim: usize,
+    y_dim: usize,
     total_tiles: usize,
     water_count: usize,
     grass_count: usize,
@@ -41,6 +44,8 @@ pub struct World {
 impl World {
     pub fn new(xdim: usize, ydim: usize,file: String) -> World {
         let mut w = World {
+            x_dim: xdim,
+            y_dim: ydim,
             total_tiles: ydim * xdim,
             water_count: 0,
             grass_count: 0,
@@ -168,5 +173,18 @@ impl World {
         let serialized = serde_json::to_string_pretty(&self).unwrap();
         fs::write(json_fn, serialized).expect("Unable to write file");
     }
-    
+
+    pub fn check_ttype(&self, x: usize, y: usize) -> TileType {
+        self.map[y][x].get_ttype()
+    }
+
+    /*     #[warn(dead_code)]
+    pub fn get_xdim(self) -> usize {
+        self.x_dim
+    }
+    #[warn(dead_code)]
+    pub fn get_ydim(self) -> usize {
+        self.y_dim
+    }
+    */
 }

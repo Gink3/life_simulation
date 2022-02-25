@@ -7,8 +7,8 @@ use serde::{Serialize, Deserialize};
 //use crate::person::Person;
 
 // tile types
-#[derive(Serialize, Deserialize, Debug)]
-enum TileType {
+#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
+pub enum TileType {
     Water,
     Beach,
     Grass,
@@ -20,7 +20,7 @@ enum TileType {
 // Describes the basic unit of the world
 // ttype --> tile type
 // solid --> whether something can move through that tile
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 pub struct Tile {
     ttype: TileType,
     solid: bool,
@@ -56,5 +56,9 @@ impl Tile {
             ttype: TileType::TallMountain,
             solid: true,
         }
+    }
+    // Get tile type
+    pub fn get_ttype(&self) -> TileType {
+        self.ttype
     }
 }

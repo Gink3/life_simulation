@@ -57,14 +57,14 @@ fn main() -> std::io::Result<()> {
             _s = Sim::new(Config::load_world(filename.to_string()));
         // Generates new world
         } else {
-            _s = Sim::new(Config::new_world("sim_out\\world.png".to_string()));
+            _s = Sim::new(Config::new_world("sim_out\\world".to_string()));
         }
     }
 
     // TODO
     // Simulation run code here
-
-    //s.sim_debug_json();
+    _s.print_entity_stats();
+    _s.sim_debug_json();
     
     Ok(())
 }
