@@ -1,4 +1,5 @@
 
+use std::collections::HashMap;
 use std::fs;
 
 use rand::Rng;
@@ -21,6 +22,9 @@ use animal::Animal;
 use crate::config::Config;
 use crate::sim::world::tile::TileType;
 
+mod plant_controller;
+use plant_controller::PlantController;
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Sim {
     years: usize,
@@ -30,7 +34,7 @@ pub struct Sim {
     init_people: usize,
     people: Vec<Person>,
     init_plants: usize,
-    plants: Vec<Plant>,
+    plants: PlantController,
     init_animals: usize,
     animals: Vec<Animal>,
 }
@@ -48,7 +52,7 @@ impl Sim {
                 sim_world: World::load_world(c.get_world_filename()).unwrap(),
                 // init plants
                 init_plants: c.get_init_pl(),
-                plants: Vec::<Plant>::new(),
+                plants: PlantController::new(),
                 // init animals
                 init_animals: c.get_init_an(),
                 animals: Vec::<Animal>::new(),
@@ -65,7 +69,7 @@ impl Sim {
                 sim_world: World::new(c.get_xdim(),c.get_ydim(),c.get_world_filename().to_string()),
                 // init plants
                 init_plants: c.get_init_pl(),
-                plants: Vec::<Plant>::new(),
+                plants: PlantController::new(),
                 // init animals
                 init_animals: c.get_init_an(),
                 animals: Vec::<Animal>::new(),
