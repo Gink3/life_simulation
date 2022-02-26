@@ -13,8 +13,10 @@ pub struct PlantController {
 }
 
 impl PlantController {
-    pub fn new() -> PlantController {
-        PlantController {
+    pub fn new() -> PlantController 
+    {
+        PlantController 
+        {
             plants: HashMap::new(),
         }
     }
@@ -23,29 +25,35 @@ impl PlantController {
     // 
     //
     //
-    pub fn insert_new_plant(&mut self, x: usize, y: usize, p: Plant) {
+    pub fn insert_new_plant(&mut self, x: usize, y: usize, p: Plant) 
+    {
             // create tuple
             let coords = (x,y);
             // insert into Hashmap
             self.plants.insert(coords, p);
     }
-    pub fn has_plant_at(&self, x: usize, y: usize) -> bool {
+    pub fn has_plant_at(&self, x: usize, y: usize) -> bool 
+    {
         let coords = (x,y);
         self.plants.contains_key(&coords)
     }
-    pub fn update_coord() {
+    pub fn update_coord() 
+    {
         todo!()
     }
     // Removes plant with coordinates x,y
     //
     //
-    pub fn remove_plant_at(&mut self, x: usize, y: usize) {
-        if self.has_plant_at(x, y) {
+    pub fn remove_plant_at(&mut self, x: usize, y: usize) 
+    {
+        if self.has_plant_at(x, y) 
+        {
             let coords = (x,y);
             self.plants.remove(&coords);
         }
     }
-    pub fn get_plant_count(&self) -> usize {
+    pub fn get_plant_count(&self) -> usize 
+    {
         self.plants.len()
     }
 }
@@ -56,7 +64,8 @@ mod tests {
 
     //
     #[test]
-    fn pc_add_1_to_hashmap() {
+    fn pc_add_1_to_hashmap() 
+    {
         let mut pc = PlantController::new();
         let test_plant = Plant::berry_bush();
         
@@ -66,10 +75,12 @@ mod tests {
     }
     //
     #[test]
-    fn pc_add_10_to_hashmap() {
+    fn pc_add_10_to_hashmap() 
+    {
         let mut pc = PlantController::new();
 
-        for i in 0..10 {
+        for i in 0..10 
+        {
             let test_plant = Plant::berry_bush();
             pc.insert_new_plant(i, 0, test_plant);
         }
@@ -78,13 +89,15 @@ mod tests {
     }
     //
     #[test]
-    fn pc_init_to_0() {
+    fn pc_init_to_0() 
+    {
         let pc = PlantController::new();
         assert_eq!(pc.get_plant_count(), 0);
     }
     //
     #[test]
-    fn pc_can_remove_plant() {
+    fn pc_can_remove_plant() 
+    {
         let mut pc = PlantController::new();
         let test_plant = Plant::berry_bush();
         
