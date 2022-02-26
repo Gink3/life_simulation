@@ -34,7 +34,7 @@ pub struct Sim {
     init_people: usize,
     people: Vec<Person>,
     init_plants: usize,
-    plants: PlantController,
+    plant_controller: PlantController,
     init_animals: usize,
     animals: Vec<Animal>,
 }
@@ -52,7 +52,7 @@ impl Sim {
                 sim_world: World::load_world(c.get_world_filename()).unwrap(),
                 // init plants
                 init_plants: c.get_init_pl(),
-                plants: PlantController::new(),
+                plant_controller: PlantController::new(),
                 // init animals
                 init_animals: c.get_init_an(),
                 animals: Vec::<Animal>::new(),
@@ -69,7 +69,7 @@ impl Sim {
                 sim_world: World::new(c.get_xdim(),c.get_ydim(),c.get_world_filename().to_string()),
                 // init plants
                 init_plants: c.get_init_pl(),
-                plants: PlantController::new(),
+                plant_controller: PlantController::new(),
                 // init animals
                 init_animals: c.get_init_an(),
                 animals: Vec::<Animal>::new(),
@@ -112,14 +112,14 @@ impl Sim {
                             // Debug print statement
                             // println!("Generating berry bush on grass");
 
-                            self.plants.push(Plant::berry_bush());
+                            self.plant_controller.insert_new_plant(rand_x, rand_y, Plant::berry_bush());
                             on_land = true;
                         }
                         TileType::Mountain => {
                             // Debug print statement
                             // println!("Generating berry bush on mountain");
 
-                            self.plants.push(Plant::berry_bush());
+                            self.plant_controller.insert_new_plant(rand_x, rand_y, Plant::berry_bush());
                             on_land = true;
                         }
                         _ => (),
@@ -129,7 +129,7 @@ impl Sim {
     }
     // Print entity stats
     pub fn print_entity_stats(&self) {
-        println!("Plant count: {:?}",self.plants.len());
+        println!("Plant count: {:?}",self.plant_controller.get_plant_count());
         println!("Animal count: {:?}",self.animals.len());
         println!("Person count: {:?}",self.people.len());
     }
