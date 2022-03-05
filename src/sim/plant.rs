@@ -9,11 +9,13 @@ pub struct Plant
     edible: bool,
     servings: usize,
     can_move_through: bool,
+    x: usize,
+    y: usize,
 }
 
 impl Plant 
 {
-    pub fn berry_bush() -> Plant 
+    pub fn berry_bush(xc: usize,yc: usize) -> Plant 
     {
         Plant 
         {
@@ -21,6 +23,8 @@ impl Plant
             edible: true,
             servings: 4,
             can_move_through: false,
+            x: xc,
+            y: yc,
         }
     }
     #[allow(dead_code)]
@@ -38,7 +42,7 @@ mod tests {
     #[test]
     fn is_berry_bush() 
     {
-        let bb = Plant::berry_bush();
+        let bb = Plant::berry_bush(0,0);
 
         assert_eq!(bb.get_species(), "Berry Bush");
     }

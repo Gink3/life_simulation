@@ -22,9 +22,6 @@ use animal::Animal;
 use crate::config::Config;
 use crate::sim::world::tile::TileType;
 
-mod plant_controller;
-use plant_controller::PlantController;
-
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Sim {
     years: usize,
@@ -34,7 +31,7 @@ pub struct Sim {
     init_people: usize,
     people: Vec<Person>,
     init_plants: usize,
-    plant_controller: PlantController,
+    plants: Vec<Plant>,
     init_animals: usize,
     animals: Vec<Animal>,
 }
@@ -52,7 +49,7 @@ impl Sim {
                 sim_world: World::load_world(c.get_world_filename()).unwrap(),
                 // init plants
                 init_plants: c.get_init_pl(),
-                plant_controller: PlantController::new(),
+                plants: Vec::<Plant>::new(),
                 // init animals
                 init_animals: c.get_init_an(),
                 animals: Vec::<Animal>::new(),
@@ -69,7 +66,7 @@ impl Sim {
                 sim_world: World::new(c.get_xdim(),c.get_ydim(),c.get_world_filename().to_string()),
                 // init plants
                 init_plants: c.get_init_pl(),
-                plant_controller: PlantController::new(),
+                plants: Vec::<Plant>::new(),
                 // init animals
                 init_animals: c.get_init_an(),
                 animals: Vec::<Animal>::new(),
@@ -101,8 +98,8 @@ impl Sim {
         for _i in 0..np {
             let mut on_land: bool = false;
             while !on_land {
-                let rand_x = rng.gen_range(0..=xdim);
-                let rand_y = rng.gen_range(0..=ydim);
+                let rand_x = rng.gen_range(0..xdim);
+                let rand_y = rng.gen_range(0..ydim);
                 // TODO
                 // checks if already occupied by a plant
 
@@ -112,14 +109,14 @@ impl Sim {
                             // Debug print statement
                             // println!("Generating berry bush on grass");
 
-                            self.plant_controller.insert_new_plant(rand_x, rand_y, Plant::berry_bush());
+                            self.plants.push(Plant::berry_bush(rand_x, rand_y));
                             on_land = true;
                         }
                         TileType::Mountain => {
                             // Debug print statement
                             // println!("Generating berry bush on mountain");
 
-                            self.plant_controller.insert_new_plant(rand_x, rand_y, Plant::berry_bush());
+                            self.plants.push(Plant::berry_bush(rand_x, rand_y));
                             on_land = true;
                         }
                         _ => (),
@@ -129,7 +126,7 @@ impl Sim {
     }
     // Print entity stats
     pub fn print_entity_stats(&self) {
-        println!("Plant count: {:?}",self.plant_controller.get_plant_count());
+        println!("Plant count: {:?}",self.plants.len());
         println!("Animal count: {:?}",self.animals.len());
         println!("Person count: {:?}",self.people.len());
     }
@@ -143,7 +140,11 @@ impl Sim {
     // writes the simulation as a json file
     #[allow(dead_code)]
     pub fn sim_debug_json(&self) {
-        let serialized = serde_json::to_string_pretty(&self).unwrap();
-        fs::write("sim_debug.json".to_string(),serialized).expect("Unable to write file")
+        let serialized = match serde_json::to_string_pretty(&self)
+        {
+            Ok(s) => s,
+            Err(error) => panic!("Problem serializing sim: {:?}",error),
+        };
+            fs::write("sim_debug.json".to_string(),serialized).expect("Unable to write file")
     }
 }
