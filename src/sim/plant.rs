@@ -33,6 +33,12 @@ impl Plant
         self.species
     }
 
+    pub fn get_x(&self) -> usize {
+        self.x
+    }
+    pub fn get_y(&self) -> usize {
+        self.y
+    }
 }
 
 #[cfg(test)]
@@ -45,5 +51,12 @@ mod tests {
         let bb = Plant::berry_bush(0,0);
 
         assert_eq!(bb.get_species(), "Berry Bush");
+    }
+    #[test]
+    fn has_correct_coords()
+    {
+        let bb = Plant::berry_bush(0, 0);
+
+        assert_eq!(bb.get_x(), 0);
     }
 }
