@@ -26,7 +26,7 @@ pub struct Person {
 }
 
 impl Person {
-    pub fn new(l: usize) -> Person {
+    pub fn new(l: usize, xc: usize, yc: usize) -> Person {
         Person {
             pid: l,
             generation: 0,
@@ -35,8 +35,8 @@ impl Person {
             last_name: "King".to_string(),
             birthyear: 0,
             birthday: 0,
-            x: 0,
-            y: 0,
+            x: xc,
+            y: yc,
             spouse_pid: -1,
             gender: Gender::Male,
             message_log: Vec::<Message>::new(),
