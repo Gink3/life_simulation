@@ -59,3 +59,30 @@ impl Person {
         self.y
     }
 }
+
+#[cfg(test)]
+mod tests
+{
+    use super::*;
+
+    #[test]
+    fn has_correct_xcoord()
+    {
+        let p = Person::new(0,1,1);
+        assert_eq!(p.get_x(),1);
+    }
+    #[test]
+    fn has_correct_ycoord()
+    {
+        let p = Person::new(0,1,1);
+        assert_eq!(p.get_y(),1);
+    }
+
+    #[test]
+    fn has_position()
+    {
+        let p = Person::new(0,1,1);
+        assert!(p.is_at(1, 1));
+    }
+
+}
