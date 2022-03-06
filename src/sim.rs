@@ -75,15 +75,10 @@ impl Sim {
                 people: Vec::<Person>::new(),
             };
         }
-        // Generates plants
+        // Generates entities
         s.generate_init_plants(s.init_plants, c.get_xdim(), c.get_ydim());
         s.generate_init_animals(s.init_animals, c.get_xdim(), c.get_ydim());
-        // Generates people into person vector
-        // TODO animal generation goes here
-        // TODO move people generation to its own function
-        for _count in 0..c.get_init_pe() {
-            s.people.push(Person::new(s.people.len()));
-        }
+        s.generate_init_people(s.init_people, c.get_xdim(), c.get_ydim());
 
         s
     }
@@ -163,6 +158,44 @@ impl Sim {
         }
     }
 
+    // Generates initial people to simplify simulation initalization
+    // np - number of inital people
+    // xdim - x dimension of world
+    // ydim - y dimension of world
+    fn generate_init_people(&mut self,np: usize, xdim: usize,ydim: usize)
+    {
+        let mut rng = rand::thread_rng();
+
+        // Loop to create X number of plants
+        // where x is defined in init_plants
+        for _i in 0..np 
+        {
+            let mut on_land: bool = false;
+            while !on_land 
+            {
+                let rand_x = rng.gen_range(0..xdim);
+                let rand_y = rng.gen_range(0..ydim);
+                // TODO
+                // checks if already occupied by a plant
+
+                    match self.sim_world.check_ttype(rand_x,rand_y) 
+                    {
+
+                        TileType::Grass => 
+                        {
+                            self.people.push(Person::new(self.people.len(),rand_x, rand_y));
+                            on_land = true;
+                        }
+                        TileType::Mountain => 
+                        {
+                            self.people.push(Person::new(self.people.len(),rand_x, rand_y));
+                            on_land = true;
+                        }
+                        _ => (),
+                    }
+            }
+        }
+    }
     // Print entity stats
     pub fn print_entity_stats(&self) {
         println!("Plant count: {:?}",self.plants.len());
