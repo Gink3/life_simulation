@@ -6,6 +6,9 @@ use rand::Rng;
 use serde::{Serialize, Deserialize};
 //use ron::ser::to_string_pretty;
 
+// Image libraries
+use image::{RgbImage, Rgb};
+
 // internal modules-
 pub mod world;
 use crate::sim::world::World;
@@ -195,6 +198,77 @@ impl Sim {
                     }
             }
         }
+    }
+
+    pub fn run(&self, days: usize)
+    {
+        for d in 0..days
+        {
+            if d % 100 == 0
+            {
+                // TODO get snapshot of world
+                self.snapshot(d);
+            }
+        }
+    }
+
+    fn snapshot(&self, day_count: usize)
+    {
+        let mut filename = "sim_out\\snapshot-".to_string();
+        filename += &day_count.to_string();
+        let mut img = RgbImage::new(
+            self.sim_world.get_xdim() as u32,
+            self.sim_world.get_ydim() as u32);
+
+        // Draw the terrain
+        for y in 0..self.sim_world.get_ydim()
+        {
+            for x in 0..self.sim_world.get_xdim()
+            {
+                match self.sim_world.check_ttype(x,y)
+                {
+                    TileType::Beach => img.put_pixel(x as u32,y as u32,Rgb([252,225,149])),
+                    TileType::Grass => img.put_pixel(x as u32,y as u32,Rgb([64, 133, 52])),
+                    TileType::Mountain => img.put_pixel(x as u32,y as u32,Rgb([127,141,163])),
+                    TileType::TallMountain => img.put_pixel(x as u32,y as u32,Rgb([46,45,44])),
+                    TileType::Water => img.put_pixel(x as u32, y as u32, Rgb([0,0,255])),
+                    _ => (),
+                }
+            }
+        }
+
+        // Overlay entites
+        // RGB codes
+        // Animals - 79, 6, 21
+        // Plants - 17, 77, 7
+        // People - 25, 225, 247
+        for a in &self.animals
+        {
+            let x = a.get_x();
+            let y = a.get_y();
+
+            img.put_pixel(x as u32, y as u32, Rgb([79,6,21]));
+        }
+        for p in &self.plants
+        {
+            let x = p.get_x();
+            let y = p.get_y();
+
+            img.put_pixel(x as u32, y as u32, Rgb([17,77,7]));
+        }
+
+        for p in &self.people
+        {
+            let x = p.get_x();
+            let y = p.get_y();
+
+            img.put_pixel(x as u32, y as u32, Rgb([25,225,247]));
+        }
+
+        match img.save(filename + ".png") {
+            Ok(_v) => (),
+            Err(e) => println!("{:?}",e),
+        };
     }
     // Print entity stats
     pub fn print_entity_stats(&self) {

@@ -64,6 +64,7 @@ fn main() -> std::io::Result<()> {
     // TODO
     // Simulation run code here
     _s.print_entity_stats();
+    _s.run(1000);
     _s.sim_debug_json();
     
     Ok(())
