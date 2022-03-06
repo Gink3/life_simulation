@@ -183,7 +183,8 @@ impl Sim {
 
                     match self.sim_world.check_ttype(rand_x,rand_y) 
                     {
-
+                        TileType::Water => (),
+                        TileType::Beach => (),
                         TileType::Grass => 
                         {
                             self.people.push(Person::new(self.people.len(),rand_x, rand_y));
@@ -194,7 +195,7 @@ impl Sim {
                             self.people.push(Person::new(self.people.len(),rand_x, rand_y));
                             on_land = true;
                         }
-                        _ => (),
+                        TileType::TallMountain => (),
                     }
             }
         }
@@ -206,7 +207,6 @@ impl Sim {
         {
             if d % 100 == 0
             {
-                // TODO get snapshot of world
                 self.snapshot(d);
             }
         }
@@ -232,7 +232,6 @@ impl Sim {
                     TileType::Mountain => img.put_pixel(x as u32,y as u32,Rgb([127,141,163])),
                     TileType::TallMountain => img.put_pixel(x as u32,y as u32,Rgb([46,45,44])),
                     TileType::Water => img.put_pixel(x as u32, y as u32, Rgb([0,0,255])),
-                    _ => (),
                 }
             }
         }
