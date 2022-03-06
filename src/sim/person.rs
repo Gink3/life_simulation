@@ -42,4 +42,20 @@ impl Person {
             message_log: Vec::<Message>::new(),
         }
     }
+    pub fn is_at(&self, xc: usize, yc: usize) -> bool
+    {
+        if self.x == xc && self.y == yc 
+        {
+            return true
+        }
+        false
+    }
+    pub fn get_x(&self) -> usize
+    {
+        self.x
+    }
+    pub fn get_y(&self) -> usize
+    {
+        self.y
+    }
 }

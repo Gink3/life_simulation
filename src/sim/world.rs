@@ -178,13 +178,13 @@ impl World {
         self.map[y][x].get_ttype()
     }
 
-    /*     #[warn(dead_code)]
-    pub fn get_xdim(self) -> usize {
+    pub fn get_xdim(&self) -> usize 
+    {
         self.x_dim
     }
-    #[warn(dead_code)]
-    pub fn get_ydim(self) -> usize {
+    pub fn get_ydim(&self) -> usize 
+    {
         self.y_dim
     }
-    */
+
 }
