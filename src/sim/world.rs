@@ -42,7 +42,8 @@ pub struct World {
 }
 
 impl World {
-    pub fn new(xdim: usize, ydim: usize) -> World {
+    pub fn new(xdim: usize, ydim: usize) -> World 
+    {
         let mut w = World {
             x_dim: xdim,
             y_dim: ydim,
@@ -61,7 +62,8 @@ impl World {
     // xdim - x dimension of map
     // ydim - y dimension of map
     // food_output - food scarcity percentage
-    pub fn initialize(&mut self,xdim: usize,ydim: usize)  {
+    pub fn initialize(&mut self,xdim: usize,ydim: usize)  
+    {
         // initialize rng
         let mut rng = rand::thread_rng();
         
@@ -89,9 +91,11 @@ impl World {
         let mountain_cutoff = 0.5;
 
         // Creates tiles by row then appends row to 
-        for y in 0..ydim {
+        for y in 0..ydim 
+        {
             let mut tmp_row = Vec::new();
-            for x in 0..xdim {
+            for x in 0..xdim 
+            {
                 let v = nmap.get_value(x,y);
 
                 // Iterates over noise map
@@ -101,16 +105,19 @@ impl World {
                     self.water_count+=1;
 
                 // set beach
-                } else if v > water_cutoff && v <= beach_cutoff  {
+                } else if v > water_cutoff && v <= beach_cutoff  
+                {
                     tmp_row.push(Tile::beach());
 
                 // set grass
-                } else if v > beach_cutoff && v <= grass_cutoff {
+                } else if v > beach_cutoff && v <= grass_cutoff 
+                {
                     tmp_row.push(Tile::grass());
                     self.grass_count+=1;
 
                 // set mountain
-                } else if v > grass_cutoff && v <= mountain_cutoff {
+                } else if v > grass_cutoff && v <= mountain_cutoff 
+                {
                     tmp_row.push(Tile::mountain());
                     self.mountain_count+=1;
 
@@ -153,7 +160,8 @@ impl World {
         };
     }
     // Outputs world tile statistics
-    fn print_stats(&self) {
+    fn print_stats(&self) 
+    {
         let readable_tt = self.total_tiles.to_formatted_string(&Locale::en);
         println!("Total tiles: {}", readable_tt);
 
@@ -171,7 +179,8 @@ impl World {
     // Loads a serialized json world for repeating
     // simulations on the same world 
     // From https://docs.serde.rs/serde_json/de/fn.from_reader.html
-    pub fn load_world<P: AsRef<Path>>(path: P) -> Result<World,Box<dyn Error>>{
+    pub fn load_world<P: AsRef<Path>>(path: P) -> Result<World,Box<dyn Error>>
+    {
         let file = File::open(path)?;
         let reader = BufReader::new(file);
 
@@ -181,7 +190,8 @@ impl World {
     }
     // Debug function to output the world in json format
     #[allow(dead_code)]
-    pub fn serialize_world(&self,filename: String) {
+    pub fn serialize_world(&self,filename: String) 
+    {
         // append json file extension
         let json_fn = filename + ".json";
         // let mut file = File::open(filename);
@@ -189,7 +199,8 @@ impl World {
         fs::write(json_fn, serialized).expect("Unable to write file");
     }
 
-    pub fn check_ttype(&self, x: usize, y: usize) -> TileType {
+    pub fn check_ttype(&self, x: usize, y: usize) -> TileType 
+    {
         self.map[y][x].get_ttype()
     }
 
@@ -215,6 +226,7 @@ mod tests
         let w = World::new(10,10);
         assert_eq!(w.get_xdim(),10);
     }
+    #[test]
     fn has_ydim()
     {
         let w = World::new(10,10);

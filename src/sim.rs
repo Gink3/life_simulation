@@ -40,11 +40,14 @@ pub struct Sim {
 }
 
 impl Sim {
-    pub fn new(c:Config) -> Sim {
+    pub fn new(c:Config) -> Sim 
+    {
         let mut s: Sim;
         // Load world sim
-        if c.will_load_world() {
-            s = Sim {
+        if c.will_load_world() 
+        {
+            s = Sim 
+            {
                 years: 0,
                 days: 0,
                 score: 0,
@@ -61,8 +64,10 @@ impl Sim {
                 people: Vec::<Person>::new(),
             };
         // Generate new world sim
-        } else {
-            s = Sim {
+        } else 
+        {
+            s = Sim 
+            {
                 years: 0,
                 days: 0,
                 score: 0,
@@ -89,29 +94,35 @@ impl Sim {
     // np - number of plants
     // xdim - x dimension
     // ydim - y dimension
-    fn generate_init_plants(&mut self,np: usize, xdim: usize,ydim: usize) {
+    fn generate_init_plants(&mut self,np: usize, xdim: usize,ydim: usize) 
+    {
         let mut rng = rand::thread_rng();
 
         // Loop to create X number of plants
         // where x is defined in init_plants
-        for _i in 0..np {
+        for _i in 0..np 
+        {
             let mut on_land: bool = false;
-            while !on_land {
+            while !on_land 
+            {
                 let rand_x = rng.gen_range(0..xdim);
                 let rand_y = rng.gen_range(0..ydim);
                 // TODO
                 // checks if already occupied by a plant
 
-                    match self.sim_world.check_ttype(rand_x,rand_y) {
+                    match self.sim_world.check_ttype(rand_x,rand_y) 
+                    {
 
-                        TileType::Grass => {
+                        TileType::Grass => 
+                        {
                             // Debug print statement
                             // println!("Generating berry bush on grass");
 
                             self.plants.push(Plant::berry_bush(rand_x, rand_y));
                             on_land = true;
                         }
-                        TileType::Mountain => {
+                        TileType::Mountain => 
+                        {
                             // Debug print statement
                             // println!("Generating berry bush on mountain");
 
@@ -127,7 +138,8 @@ impl Sim {
     // na - number of inital animals
     // xdim - x dimension of world
     // ydim - y dimension of world
-    fn generate_init_animals(&mut self,na: usize, xdim: usize,ydim: usize) {
+    fn generate_init_animals(&mut self,na: usize, xdim: usize,ydim: usize) 
+    {
         let mut rng = rand::thread_rng();
 
         // Loop to create X number of plants
@@ -264,13 +276,15 @@ impl Sim {
             img.put_pixel(x as u32, y as u32, Rgb([25,225,247]));
         }
 
-        match img.save(filename + ".png") {
+        match img.save(filename + ".png") 
+        {
             Ok(_v) => (),
             Err(e) => println!("{:?}",e),
         };
     }
     // Print entity stats
-    pub fn print_entity_stats(&self) {
+    pub fn print_entity_stats(&self) 
+    {
         println!("Plant count: {:?}",self.plants.len());
         println!("Animal count: {:?}",self.animals.len());
         println!("Person count: {:?}",self.people.len());
@@ -278,13 +292,15 @@ impl Sim {
 
     // writes the simulation as a ron file
     #[allow(dead_code)]
-    pub fn sim_debug_ron(&self) {
+    pub fn sim_debug_ron(&self) 
+    {
         let serialized = ron::to_string(&self).unwrap();
         fs::write("sim_debug.ron",serialized).expect("Unable to write file")
     }
     // writes the simulation as a json file
     #[allow(dead_code)]
-    pub fn sim_debug_json(&self) {
+    pub fn sim_debug_json(&self) 
+    {
         let serialized = match serde_json::to_string_pretty(&self)
         {
             Ok(s) => s,

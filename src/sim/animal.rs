@@ -23,8 +23,10 @@ pub struct Animal {
 }
 
 impl Animal {
-    pub fn rabbit(xc: usize, yc: usize) -> Animal {
-        Animal {
+    pub fn rabbit(xc: usize, yc: usize) -> Animal 
+    {
+        Animal 
+        {
             species: "Rabbit".to_string(),
             health: 5,
             hunger: 100,
@@ -33,8 +35,10 @@ impl Animal {
             y: yc,
         }
     }
-    pub fn wolf(xc: usize, yc: usize) -> Animal {
-        Animal {
+    pub fn wolf(xc: usize, yc: usize) -> Animal 
+    {
+        Animal 
+        {
             species: "Wolf".to_string(),
             health: 20,
             hunger: 100,
@@ -52,7 +56,8 @@ impl Animal {
         self.y
     }
     #[allow(dead_code)]
-    pub fn get_species(self) -> String {
+    pub fn get_species(self) -> String 
+    {
         self.species
     }
 
@@ -63,14 +68,16 @@ mod tests {
     // Note this useful idiom: importing names from outer (for mod tests) scope.
     use super::*;
     #[test]
-    fn is_rabbit() {
+    fn is_rabbit() 
+    {
         let r = Animal::rabbit(0,0);
 
         assert_eq!(r.get_species(),"Rabbit".to_string());
     }
 
     #[test]
-    fn is_wolf() {
+    fn is_wolf() 
+    {
         let w = Animal::wolf(0,0);
 
         assert_eq!(w.get_species(),"Wolf".to_string());

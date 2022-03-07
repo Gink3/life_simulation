@@ -26,7 +26,8 @@ pub struct Person {
 }
 
 impl Person {
-    pub fn new(l: usize, xc: usize, yc: usize) -> Person {
+    pub fn new(l: usize, xc: usize, yc: usize) -> Person 
+    {
         Person {
             pid: l,
             generation: 0,

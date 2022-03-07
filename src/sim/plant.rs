@@ -27,16 +27,19 @@ impl Plant
             y: yc,
         }
     }
+
     #[allow(dead_code)]
     pub fn get_species(self) -> String 
     {
         self.species
     }
 
-    pub fn get_x(&self) -> usize {
+    pub fn get_x(&self) -> usize 
+    {
         self.x
     }
-    pub fn get_y(&self) -> usize {
+    pub fn get_y(&self) -> usize 
+    {
         self.y
     }
 }
