@@ -315,6 +315,7 @@ impl Sim {
             Ok(s) => s,
             Err(error) => panic!("Problem serializing sim: {:?}",error),
         };
-            fs::write("sim_debug.json".to_string(),serialized).expect("Unable to write file")
+            let filepath = Path::new("sim_out/sim_debug.json");
+            fs::write(filepath,serialized).expect("Unable to write file")
     }
 }

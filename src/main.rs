@@ -1,7 +1,7 @@
 
 use std::env;
 use std::time::Instant;
-
+use std::path::PathBuf;
 mod sim;
 use crate::sim::Sim;
 
@@ -20,9 +20,9 @@ fn main() -> std::io::Result<()> {
     // Generates worlds to look at and store without running a simulation
     if args.len() >= 3 && args[1] == "--gen-world" {
         let filename = &args[2];
-        let c = Config::new_world(filename.to_string());
+        let c = Config::new_world(PathBuf::from(filename));
         let w = World::new(c.get_xdim(),c.get_ydim());
-        w.draw_world(c.get_world_filename().to_string());
+        w.draw_world(c.get_world_filename().to_path_buf());
         w.serialize_world(filename.to_string());
 
         return Ok(());
@@ -37,11 +37,11 @@ fn main() -> std::io::Result<()> {
             let filename = &args[idx+1];
             
             //Initalizes sim with saved world
-            _s = Sim::new(Config::load_world(filename.to_string()));
+            _s = Sim::new(Config::load_world(PathBuf::from(filename)));
 
         // Generates new world
         } else {
-            _s = Sim::new(Config::new_world("sim_out\\world".to_string()));
+            _s = Sim::new(Config::new_world(PathBuf::from("./sim_out/world")));
         }
         
         // Calculate and print time elapsed
@@ -55,10 +55,10 @@ fn main() -> std::io::Result<()> {
             let idx = args.iter().position(|r| r=="load-world").unwrap();
             let filename = &args[idx+1];
 
-            _s = Sim::new(Config::load_world(filename.to_string()));
+            _s = Sim::new(Config::load_world(PathBuf::from(filename)));
         // Generates new world
         } else {
-            _s = Sim::new(Config::new_world("sim_out\\world".to_string()));
+            _s = Sim::new(Config::new_world(PathBuf::from("./sim_out/world")));
         }
     }
 
