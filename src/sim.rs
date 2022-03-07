@@ -1,6 +1,12 @@
-
+/*
+-------------------------------------
+Taylor King
+This is written as a personal project
+-------------------------------------
+*/
 
 use std::fs;
+use std::path::Path;
 
 use rand::Rng;
 use serde::{Serialize, Deserialize};
@@ -228,8 +234,9 @@ impl Sim {
 
     fn snapshot(&self, day_count: usize)
     {
-        let mut filename = "sim_out\\snapshot-".to_string();
+        let mut filename = "sim_out/snapshot-".to_string();
         filename += &day_count.to_string();
+        filename += ".png";
         let mut img = RgbImage::new(
             self.sim_world.get_xdim() as u32,
             self.sim_world.get_ydim() as u32);
@@ -278,7 +285,7 @@ impl Sim {
             img.put_pixel(x as u32, y as u32, Rgb([25,225,247]));
         }
 
-        match img.save(filename + ".png") 
+        match img.save(Path::new(&filename)) 
         {
             Ok(_v) => (),
             Err(e) => println!("{:?}",e),
