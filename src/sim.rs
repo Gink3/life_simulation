@@ -212,7 +212,9 @@ impl Sim {
             }
         }
     }
-
+    // Main simulation function
+    // People and animals get 24 actions a day
+    // Plants get 1
     pub fn run(&self, days: usize)
     {
         for d in 0..days
