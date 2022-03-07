@@ -21,7 +21,8 @@ fn main() -> std::io::Result<()> {
     if args.len() >= 3 && args[1] == "--gen-world" {
         let filename = &args[2];
         let c = Config::new_world(filename.to_string());
-        let w = World::new(c.get_xdim(),c.get_ydim(),c.get_world_filename().to_string());
+        let w = World::new(c.get_xdim(),c.get_ydim());
+        w.draw_world(c.get_world_filename().to_string());
         w.serialize_world(filename.to_string());
 
         return Ok(());
@@ -62,7 +63,6 @@ fn main() -> std::io::Result<()> {
     }
 
     // TODO
-    // Simulation run code here
     _s.print_entity_stats();
     _s.run(1000);
     _s.sim_debug_json();

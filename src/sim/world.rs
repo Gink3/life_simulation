@@ -42,7 +42,7 @@ pub struct World {
 }
 
 impl World {
-    pub fn new(xdim: usize, ydim: usize,file: String) -> World {
+    pub fn new(xdim: usize, ydim: usize) -> World {
         let mut w = World {
             x_dim: xdim,
             y_dim: ydim,
@@ -52,16 +52,16 @@ impl World {
             mountain_count: 0,
             map: Vec::<Vec::<Tile>>::new(),
         };
-        w.initalize(xdim,ydim,file);
+        w.initialize(xdim,ydim);
         w
     }
-    // initalizes the map with tiles
+    // initializes the map with tiles
     // uses the food scarcity percentage to determine
     // which tiles will randomly get food allocated to them
     // xdim - x dimension of map
     // ydim - y dimension of map
     // food_output - food scarcity percentage
-    pub fn initalize(&mut self,xdim: usize,ydim: usize,filename:String)  {
+    pub fn initialize(&mut self,xdim: usize,ydim: usize)  {
         // initialize rng
         let mut rng = rand::thread_rng();
         
@@ -81,9 +81,6 @@ impl World {
         // Save raw noise to image
         // nmap.write_to_file("sim_out\\noisemap.png");
 
-        // Create image buffer
-        let mut img = RgbImage::new(xdim as u32, ydim as u32);
-
         // various cutoff values of the noise to define the levels at which each
         // type of tile is initially generated
         let water_cutoff = 0.008;
@@ -100,30 +97,25 @@ impl World {
                 // Iterates over noise map
                 // set water
                 if v <= water_cutoff {
-                    img.put_pixel(x as u32,y as u32,Rgb([0,0,255]));
                     tmp_row.push(Tile::water());
                     self.water_count+=1;
 
                 // set beach
                 } else if v > water_cutoff && v <= beach_cutoff  {
-                    img.put_pixel(x as u32,y as u32,Rgb([252,225,149]));
                     tmp_row.push(Tile::beach());
 
                 // set grass
                 } else if v > beach_cutoff && v <= grass_cutoff {
-                    img.put_pixel(x as u32,y as u32,Rgb([64, 133, 52]));
                     tmp_row.push(Tile::grass());
                     self.grass_count+=1;
 
                 // set mountain
                 } else if v > grass_cutoff && v <= mountain_cutoff {
-                    img.put_pixel(x as u32,y as u32,Rgb([127,141,163]));
                     tmp_row.push(Tile::mountain());
                     self.mountain_count+=1;
 
                 // set tall mountain
                 } else {
-                    img.put_pixel(x as u32,y as u32,Rgb([46,45,44]));
                     tmp_row.push(Tile::tall_mountain());
                 }
 
@@ -131,11 +123,34 @@ impl World {
             // Appends row to map vector
             self.map.push(tmp_row);
         }
-        match img.save(filename + ".png") {
+        self.print_stats();
+    }
+
+    // Draws the world to an img buffer then saves to filename
+    // Useful for debugging and testing
+    #[warn(dead_code)]
+    pub fn draw_world(&self,filename: String)
+    {
+        let mut img = RgbImage::new(self.x_dim as u32, self.y_dim as u32);
+        for y in 0..self.y_dim
+        {
+            for x in 0..self.x_dim
+            {
+                match self.map[y][x].get_ttype()
+                {
+                    TileType::Beach => img.put_pixel(x as u32,y as u32,Rgb([252,225,149])),
+                    TileType::Grass => img.put_pixel(x as u32,y as u32,Rgb([64, 133, 52])),
+                    TileType::Mountain => img.put_pixel(x as u32,y as u32,Rgb([127,141,163])),
+                    TileType::TallMountain => img.put_pixel(x as u32,y as u32,Rgb([46,45,44])),
+                    TileType::Water => img.put_pixel(x as u32, y as u32, Rgb([0,0,255])),
+                }
+            }
+        }
+        match img.save(filename + ".png") 
+        {
             Ok(_v) => (),
             Err(e) => println!("{:?}",e),
         };
-        self.print_stats();
     }
     // Outputs world tile statistics
     fn print_stats(&self) {
@@ -187,4 +202,22 @@ impl World {
         self.y_dim
     }
 
+}
+
+#[cfg(test)]
+mod tests
+{
+    use super::*;
+
+    #[test]
+    fn has_xdim()
+    {
+        let w = World::new(10,10);
+        assert_eq!(w.get_xdim(),10);
+    }
+    fn has_ydim()
+    {
+        let w = World::new(10,10);
+        assert_eq!(w.get_ydim(),10);
+    }
 }

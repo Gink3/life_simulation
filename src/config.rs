@@ -17,8 +17,8 @@ impl Config {
     // Change settings here
     pub fn new_world(filename: String) -> Config {
         Config {
-            xdim: 10000,
-            ydim: 10000,
+            xdim: 1000,
+            ydim: 1000,
             load_world: false,
             world_file: filename,
             init_pl: 10,
