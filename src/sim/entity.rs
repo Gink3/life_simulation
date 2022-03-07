@@ -1,0 +1,11 @@
+
+
+struct Entity
+{
+
+}
+
+impl Entity
+{
+    
+}
