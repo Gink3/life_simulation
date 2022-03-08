@@ -234,4 +234,16 @@ mod tests
         let w = World::new(10,10);
         assert_eq!(w.get_ydim(),10);
     }
+    #[test]
+    fn has_correct_xdim()
+    {
+        let w = World::new(10,10);
+        assert_eq!(w.map.len(),10)
+    }
+    #[test]
+    fn has_correct_ydim()
+    {
+        let w = World::new(10,10);
+        assert_eq!(w.map[0].len(),10);
+    }
 }
