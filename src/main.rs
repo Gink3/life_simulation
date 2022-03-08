@@ -37,7 +37,7 @@ fn main() -> std::io::Result<()> {
             let filename = &args[idx+1];
             
             //Initalizes sim with saved world
-            _s = Sim::new(Config::load_world(PathBuf::from(filename)));
+            _s = Sim::new(Config::load_config(PathBuf::from(filename)));
 
         // Generates new world
         } else {
@@ -55,7 +55,7 @@ fn main() -> std::io::Result<()> {
             let idx = args.iter().position(|r| r=="load-world").unwrap();
             let filename = &args[idx+1];
 
-            _s = Sim::new(Config::load_world(PathBuf::from(filename)));
+            _s = Sim::new(Config::load_config(PathBuf::from(filename)));
         // Generates new world
         } else {
             _s = Sim::new(Config::new_world(PathBuf::from("./sim_out/world")));
