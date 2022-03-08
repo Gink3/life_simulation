@@ -1,4 +1,4 @@
-use std::path::{Path, PathBuf};
+use std::path::{PathBuf};
 use serde::{Serialize, Deserialize};
 use serde_json::from_str;
 use std::fs::read_to_string;
@@ -76,6 +76,8 @@ impl Config {
 #[cfg(test)]
 mod tests
 {
+    use std::path::Path;
+
     use super::*;
 
     #[test]
