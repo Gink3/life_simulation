@@ -1,6 +1,7 @@
 
 // external crates
 use std::fs;
+use std::path::PathBuf;
 //use std::io::Write;
 //use std::io::prelude::*;
 use rand::Rng;
@@ -136,8 +137,9 @@ impl World {
     // Draws the world to an img buffer then saves to filename
     // Useful for debugging and testing
     #[warn(dead_code)]
-    pub fn draw_world(&self,filename: String)
+    pub fn draw_world(&self,filepath: PathBuf)
     {
+        
         let mut img = RgbImage::new(self.x_dim as u32, self.y_dim as u32);
         for y in 0..self.y_dim
         {
@@ -153,7 +155,7 @@ impl World {
                 }
             }
         }
-        match img.save(filename + ".png") 
+        match img.save(filepath) 
         {
             Ok(_v) => (),
             Err(e) => println!("{:?}",e),
@@ -231,5 +233,17 @@ mod tests
     {
         let w = World::new(10,10);
         assert_eq!(w.get_ydim(),10);
+    }
+    #[test]
+    fn has_correct_xdim()
+    {
+        let w = World::new(10,10);
+        assert_eq!(w.map.len(),10)
+    }
+    #[test]
+    fn has_correct_ydim()
+    {
+        let w = World::new(10,10);
+        assert_eq!(w.map[0].len(),10);
     }
 }

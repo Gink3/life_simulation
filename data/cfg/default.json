@@ -1,0 +1,9 @@
+{
+    "xdim": 100,
+    "ydim": 100,
+    "load_world": false,
+    "world_file": "",
+    "init_pl": 10,
+    "init_an": 10,
+    "init_pe": 10
+}

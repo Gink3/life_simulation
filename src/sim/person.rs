@@ -43,6 +43,7 @@ impl Person {
             message_log: Vec::<Message>::new(),
         }
     }
+    #[warn(dead_code)]
     pub fn is_at(&self, xc: usize, yc: usize) -> bool
     {
         if self.x == xc && self.y == yc 

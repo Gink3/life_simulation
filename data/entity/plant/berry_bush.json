@@ -1,0 +1,18 @@
+{
+        "eid": 0,
+        "et": "Plant", 
+        "size": "M",
+        "generation": 0,
+        "species": "bush",
+        "first_name": "plant",
+        "last_name": "plant",
+        "birthyear": 0,
+        "birthday": 0,
+        "x": 0,
+        "y": 0,
+        "score": 0,
+        "gender": "None",
+        "edible": false,
+        "can_move_through": true,
+        "can_harvest": true
+}
