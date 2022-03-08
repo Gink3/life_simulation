@@ -94,6 +94,11 @@ impl Entity
     {
         self.eid = id;
     }
+    pub fn set_coords(&mut self, xc: usize, yc: usize)
+    {
+        self.x = xc;
+        self.y = yc;
+    }
 
     pub fn get_x(&self) -> usize 
     {
@@ -102,6 +107,10 @@ impl Entity
     pub fn get_y(&self) -> usize 
     {
         self.y
+    }
+    pub fn get_entitytype(&self) -> EntityType
+    {
+        self.et
     }
 }
 
