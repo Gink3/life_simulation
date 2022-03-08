@@ -20,7 +20,7 @@ enum Gender
 }
 
 #[derive(Serialize, Deserialize, Debug,Clone)]
-enum EntityType
+pub enum EntityType
 {
     Plant,
     Animal,
@@ -125,17 +125,21 @@ mod tests
     {
         let filepath = Path::new("./data/test/entity_test.json");
         let e = Entity::load(1, filepath);
+        assert_eq!("test",e.first_name);
     }
 
     #[test]
-    fn has_correct_xcoord()
+    fn loads_correct_xcoord()
     {
         let filepath = Path::new("./data/test/entity_test.json");
         let e = Entity::load(1, filepath);
+        assert_eq!(101,e.get_x());
     }
     #[test]
-    fn has_correct_ycoord()
+    fn loads_correct_ycoord()
     {
-
+        let filepath = Path::new("./data/test/entity_test.json");
+        let e = Entity::load(1, filepath);
+        assert_eq!(102,e.get_y());
     }
 }
