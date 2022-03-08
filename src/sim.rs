@@ -19,14 +19,8 @@ use image::{RgbImage, Rgb};
 pub mod world;
 use crate::sim::world::World;
 
-mod person;
-use person::Person;
-
-mod plant;
-use plant::Plant;
-
-mod animal;
-use animal::Animal;
+mod entity;
+use entity::{EntityType, Entity};
 
 use crate::config::Config;
 use crate::sim::world::tile::TileType;
@@ -38,11 +32,9 @@ pub struct Sim {
     score: i64,
     sim_world: World,
     init_people: usize,
-    people: Vec<Person>,
     init_plants: usize,
-    plants: Vec<Plant>,
     init_animals: usize,
-    animals: Vec<Animal>,
+    entities: Vec<Entity>,
 }
 
 impl Sim {
@@ -61,13 +53,12 @@ impl Sim {
                 sim_world: World::load_world(c.get_world_filename()).unwrap(),
                 // init plants
                 init_plants: c.get_init_pl(),
-                plants: Vec::<Plant>::new(),
                 // init animals
                 init_animals: c.get_init_an(),
-                animals: Vec::<Animal>::new(),
                 // init people
                 init_people: c.get_init_pe(),
-                people: Vec::<Person>::new(),
+                entities: Vec::<Entity>::new(),
+
             };
         // Generate new world sim
         } else 
@@ -80,13 +71,11 @@ impl Sim {
                 sim_world: World::new(c.get_xdim(),c.get_ydim()),
                 // init plants
                 init_plants: c.get_init_pl(),
-                plants: Vec::<Plant>::new(),
                 // init animals
                 init_animals: c.get_init_an(),
-                animals: Vec::<Animal>::new(),
                 // init people
                 init_people: c.get_init_pe(),
-                people: Vec::<Person>::new(),
+                entities: Vec::<Entity>::new(),
             };
         }
         // Generates entities
@@ -123,8 +112,9 @@ impl Sim {
                         {
                             // Debug print statement
                             // println!("Generating berry bush on grass");
-
-                            self.plants.push(Plant::berry_bush(rand_x, rand_y));
+                            let mut e = Entity::load(self.entities.len(), Path::new("./data/entity/plant/berry_bush.json"));
+                            e.set_coords(rand_x,rand_y);
+                            self.entities.push(e);
                             on_land = true;
                         }
                         TileType::Mountain => 
@@ -132,7 +122,9 @@ impl Sim {
                             // Debug print statement
                             // println!("Generating berry bush on mountain");
 
-                            self.plants.push(Plant::berry_bush(rand_x, rand_y));
+                            let mut e = Entity::load(self.entities.len(), Path::new("./data/entity/plant/berry_bush.json"));
+                            e.set_coords(rand_x,rand_y);
+                            self.entities.push(e);
                             on_land = true;
                         }
                         _ => (),
@@ -165,12 +157,16 @@ impl Sim {
 
                         TileType::Grass => 
                         {
-                            self.animals.push(Animal::rabbit(rand_x, rand_y));
+                            let mut e = Entity::load(self.entities.len(), Path::new("./data/entity/animal/rabbit.json"));
+                            e.set_coords(rand_x,rand_y);
+                            self.entities.push(e);
                             on_land = true;
                         }
                         TileType::Mountain => 
                         {
-                            self.animals.push(Animal::wolf(rand_x, rand_y));
+                            let mut e = Entity::load(self.entities.len(), Path::new("./data/entity/animal/wolf.json"));
+                            e.set_coords(rand_x,rand_y);
+                            self.entities.push(e);
                             on_land = true;
                         }
                         _ => (),
@@ -205,12 +201,16 @@ impl Sim {
                         TileType::Beach => (),
                         TileType::Grass => 
                         {
-                            self.people.push(Person::new(self.people.len(),rand_x, rand_y));
+                            let mut e = Entity::load(self.entities.len(),Path::new("./data/entity/person/adult.json"));
+                            e.set_coords(rand_x, rand_y);
+                            self.entities.push(e);
                             on_land = true;
                         }
                         TileType::Mountain => 
                         {
-                            self.people.push(Person::new(self.people.len(),rand_x, rand_y));
+                            let mut e = Entity::load(self.entities.len(),Path::new("./data/entity/person/adult.json"));
+                            e.set_coords(rand_x, rand_y);
+                            self.entities.push(e);
                             on_land = true;
                         }
                         TileType::TallMountain => (),
@@ -262,27 +262,17 @@ impl Sim {
         // Animals - 79, 6, 21
         // Plants - 17, 77, 7
         // People - 25, 225, 247
-        for a in &self.animals
+        for e in self.entities.iter()
         {
-            let x = a.get_x();
-            let y = a.get_y();
+            let x = e.get_x();
+            let y = e.get_y();
 
-            img.put_pixel(x as u32, y as u32, Rgb([79,6,21]));
-        }
-        for p in &self.plants
-        {
-            let x = p.get_x();
-            let y = p.get_y();
-
-            img.put_pixel(x as u32, y as u32, Rgb([17,77,7]));
-        }
-
-        for p in &self.people
-        {
-            let x = p.get_x();
-            let y = p.get_y();
-
-            img.put_pixel(x as u32, y as u32, Rgb([25,225,247]));
+            match e.get_entitytype()
+            {
+                EntityType::Plant => img.put_pixel(x as u32, y as u32, Rgb([79,6,21])),
+                EntityType::Animal => img.put_pixel(x as u32, y as u32, Rgb([17,77,7])),
+                EntityType::Person => img.put_pixel(x as u32, y as u32, Rgb([25,225,247])),
+            }
         }
 
         match img.save(Path::new(&filename)) 
@@ -294,9 +284,21 @@ impl Sim {
     // Print entity stats
     pub fn print_entity_stats(&self) 
     {
-        println!("Plant count: {:?}",self.plants.len());
-        println!("Animal count: {:?}",self.animals.len());
-        println!("Person count: {:?}",self.people.len());
+        let mut plant_c = 0;
+        let mut animal_c = 0;
+        let mut person_c = 0;
+        for e in self.entities.iter()
+        {
+            match e.get_entitytype()
+            {
+                EntityType::Plant => plant_c += 1,
+                EntityType::Animal => animal_c += 1,
+                EntityType::Person => person_c += 1,
+            }
+        }
+        println!("Plant count: {:?}",plant_c);
+        println!("Animal count: {:?}",animal_c);
+        println!("Person count: {:?}",person_c);
     }
 
     // writes the simulation as a ron file

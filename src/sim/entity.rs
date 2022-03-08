@@ -85,8 +85,8 @@ impl Entity
     // Loads a entity from json files in ./data/entity
     pub fn load(id: usize, p: &Path) -> Entity
     {
-        let json_string = read_to_string(&p).expect("File Not Found");
-        let e: Entity = from_str(&json_string).expect("Error while reading");
+        let json_string = read_to_string(&p).expect(&("File Not Found ".to_owned() + p.to_str().unwrap()));
+        let mut e: Entity = from_str(&json_string).expect("Error while reading");
         e.set_id(id);
         e
     }
@@ -108,9 +108,9 @@ impl Entity
     {
         self.y
     }
-    pub fn get_entitytype(&self) -> EntityType
+    pub fn get_entitytype(&self) -> &EntityType
     {
-        self.et
+        &self.et
     }
 }
 

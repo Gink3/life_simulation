@@ -1,0 +1,18 @@
+{
+    "eid": 1,
+    "et": "Animal", 
+    "size": "S",
+    "generation": 0,
+    "species": "rabbit",
+    "first_name": "fName",
+    "last_name": "lName",
+    "birthyear": 0,
+    "birthday": 0,
+    "x": 0,
+    "y": 0,
+    "score": 0,
+    "gender": "Male",
+    "edible": true,
+    "can_move_through": false,
+    "can_harvest": true
+}

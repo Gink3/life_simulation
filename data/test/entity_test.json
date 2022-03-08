@@ -1,0 +1,18 @@
+{
+    "eid": 0,
+    "et": "Animal", 
+    "size": "M",
+    "generation": 0,
+    "species": "entity",
+    "first_name": "test",
+    "last_name": "entity",
+    "birthyear": 10,
+    "birthday": 11,
+    "x": 101,
+    "y": 102,
+    "score": 100,
+    "gender": "Male",
+    "edible": false,
+    "can_move_through": false,
+    "can_harvest": false
+}

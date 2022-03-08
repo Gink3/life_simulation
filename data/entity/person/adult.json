@@ -1,0 +1,18 @@
+{
+    "eid": 0,
+    "et": "Person", 
+    "size": "M",
+    "generation": 0,
+    "species": "human",
+    "first_name": "Taylor",
+    "last_name": "King",
+    "birthyear": 0,
+    "birthday": 0,
+    "x": 0,
+    "y": 0,
+    "score": 0,
+    "gender": "Male",
+    "edible": true,
+    "can_move_through": true,
+    "can_harvest": false
+}
