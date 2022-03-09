@@ -27,7 +27,7 @@ pub enum EntityType
     Person,
 }
 
-
+#[warn(dead_code)]
 type Message = (usize,String);
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -90,6 +90,38 @@ impl Entity
         e.set_id(id);
         e
     }
+    pub fn load_plant(id: usize, pn: String) -> Entity
+    {
+        let path_str = "./data/entity/plant/".to_owned() + &pn + &".json".to_owned();
+        let path = Path::new(&path_str);
+        let json_string = read_to_string(path).expect(&("File not found".to_owned() + path.to_str().unwrap()));
+        let mut e: Entity = from_str(&json_string).expect("Error while reading");
+        e.set_id(id);
+        e
+    }
+    // Loads animal entities from templates found in
+    // ./data/entity/
+    // id - Entity Id
+    // an - animal name for file
+    // i.e. an = rabbit -> ./data/entity/animal/rabbit.json
+    pub fn load_animal(id: usize, an: String) -> Entity
+    {
+        let path_str = "./data/entity/animal/".to_owned() + &an + &".json".to_owned();
+        let path = Path::new(&path_str);
+        let json_string = read_to_string(path).expect(&("File not found".to_owned() + path.to_str().unwrap()));
+        let mut e: Entity = from_str(&json_string).expect("Error while reading");
+        e.set_id(id);
+        e
+    }
+    pub fn load_adult(id: usize) -> Entity
+    {
+        let path = Path::new("./data/entity/person/adult.json");
+        let json_string = read_to_string(path).expect(&("File not found".to_owned() + path.to_str().unwrap()));
+        let mut e: Entity = from_str(&json_string).expect("Error while reading");
+        e.set_id(id);
+        e
+    }
+    // Setter functions
     fn set_id(&mut self, id: usize)
     {
         self.eid = id;
@@ -100,6 +132,12 @@ impl Entity
         self.y = yc;
     }
 
+    // Getter functions
+    #[warn(dead_code)]
+    pub fn get_species(&self) -> &String
+    {
+        &self.species
+    }
     pub fn get_x(&self) -> usize 
     {
         self.x
@@ -141,5 +179,29 @@ mod tests
         let filepath = Path::new("./data/test/entity_test.json");
         let e = Entity::load(1, filepath);
         assert_eq!(102,e.get_y());
+    }
+    #[test]
+    fn can_load_berry_bush()
+    {
+        let e = Entity::load_plant(1, "berry_bush".to_string());
+        assert_eq!(e.get_species(), "bush")
+    }
+    #[test]
+    fn can_load_rabbit()
+    {
+        let e = Entity::load_animal(1, "rabbit".to_string());
+        assert_eq!(e.get_species(), "rabbit")
+    }
+    #[test]
+    fn can_load_wolf()
+    {
+        let e = Entity::load_animal(1, "wolf".to_string());
+        assert_eq!(e.get_species(), "wolf")
+    }
+    #[test]
+    fn can_load_adult()
+    {
+        let e = Entity::load_adult(1);
+        assert_eq!(e.get_species(), "human")
     }
 }
