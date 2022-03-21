@@ -27,7 +27,7 @@ pub enum EntityType
     Person,
 }
 
-#[warn(dead_code)]
+#[allow(dead_code)]
 type Message = (usize,String);
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -60,11 +60,12 @@ pub struct Entity
 
 impl Entity
 {
+    #[allow(dead_code)]
     pub fn new(id: usize, xdim: usize, ydim: usize) -> Entity
     {
         Entity
         {
-            eid: 1,
+            eid: id,
             et: EntityType::Animal,
             size: Size::M,
             generation: 0,
@@ -90,6 +91,7 @@ impl Entity
         e.set_id(id);
         e
     }
+    #[allow(dead_code)]
     pub fn load_plant(id: usize, pn: String) -> Entity
     {
         let path_str = "./data/entity/plant/".to_owned() + &pn + &".json".to_owned();
@@ -104,6 +106,7 @@ impl Entity
     // id - Entity Id
     // an - animal name for file
     // i.e. an = rabbit -> ./data/entity/animal/rabbit.json
+    #[allow(dead_code)]
     pub fn load_animal(id: usize, an: String) -> Entity
     {
         let path_str = "./data/entity/animal/".to_owned() + &an + &".json".to_owned();
@@ -113,6 +116,7 @@ impl Entity
         e.set_id(id);
         e
     }
+    #[allow(dead_code)]
     pub fn load_adult(id: usize) -> Entity
     {
         let path = Path::new("./data/entity/person/adult.json");
@@ -133,7 +137,7 @@ impl Entity
     }
 
     // Getter functions
-    #[warn(dead_code)]
+    #[allow(dead_code)]
     pub fn get_species(&self) -> &String
     {
         &self.species
