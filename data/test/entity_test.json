@@ -15,5 +15,5 @@
     "edible": false,
     "can_move_through": false,
     "can_harvest": false,
-    "tags": []
+    "tags": [ "CAN_MOVE" ]
 }
