@@ -224,6 +224,15 @@ impl Sim {
     pub fn run(&self, days: usize)
     {
         let snap_interval: usize = 100;
+
+        for e in &self.entities
+        {
+            if e.has_tag("CAN_MOVE") 
+            {
+                // Move code
+            }
+        }
+
         for d in 0..days
         {
 
