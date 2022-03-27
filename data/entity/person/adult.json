@@ -14,5 +14,6 @@
     "gender": "Male",
     "edible": true,
     "can_move_through": true,
-    "can_harvest": false
+    "can_harvest": false,
+    "tags": []
 }

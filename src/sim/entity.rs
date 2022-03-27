@@ -56,6 +56,7 @@ pub struct Entity
     edible: bool,
     can_move_through: bool,
     can_harvest: bool,
+    tags: Vec<String>,
 }
 
 impl Entity
@@ -81,6 +82,7 @@ impl Entity
             edible: true,
             can_move_through: false,
             can_harvest: true,
+            tags: Vec::<String>::new(),
         }
     }
     // Loads a entity from json files in ./data/entity

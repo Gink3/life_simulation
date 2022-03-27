@@ -14,5 +14,6 @@
         "gender": "None",
         "edible": false,
         "can_move_through": true,
-        "can_harvest": true
+        "can_harvest": true,
+        "tags": []
 }
