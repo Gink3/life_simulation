@@ -223,9 +223,12 @@ impl Sim {
     // Plants get 1
     pub fn run(&self, days: usize)
     {
+        let snap_interval: usize = 100;
         for d in 0..days
         {
-            if d % 100 == 0
+
+            // every 100 days take a snapshot
+            if d % snap_interval == 0
             {
                 self.snapshot(d);
             }
