@@ -28,46 +28,31 @@ fn main() -> std::io::Result<()> {
 
         return Ok(());
     }
-    // benchmarking feature check
-    if cfg!(feature = "benchmarking") {
-        let start = Instant::now();
 
-        // if load-world argument
-        if args.iter().any(|i| i=="load-world") {
-            let idx = args.iter().position(|r| r=="load-world").unwrap();
-            let filename = &args[idx+1];
-            
-            let c = Config::load_config(PathBuf::from(filename));
-            //Initalizes sim with saved world
-            _s = Sim::new(c);
+    let start = Instant::now();
 
-        // Generates new world
-        } else {
-            let c = Config::new_world(PathBuf::from("./sim_out/world"));
-            _s = Sim::new(c);
-        }
+    // if load-world argument
+    if args.iter().any(|i| i=="load-world") {
+        let idx = args.iter().position(|r| r=="load-world").unwrap();
+        let filename = &args[idx+1];
         
-        // Calculate and print time elapsed
-        let duration = start.elapsed();
-        println!("{:?}",duration);
-    // if benchmarking not enabled
+        let c = Config::load_config(PathBuf::from(filename));
+        //Initalizes sim with saved world
+        _s = Sim::new(c);
+
+    // Generates new world
     } else {
-
-        // loads world
-        if args.iter().any(|i| i=="load-world") {
-            let idx = args.iter().position(|r| r=="load-world").unwrap();
-            let filename = &args[idx+1];
-
-            _s = Sim::new(Config::load_config(PathBuf::from(filename)));
-        // Generates new world
-        } else {
-            _s = Sim::new(Config::new_world(PathBuf::from("./sim_out/world")));
-        }
+        let c = Config::new_world(PathBuf::from("./sim_out/world"));
+        _s = Sim::new(c);
     }
 
     _s.print_entity_stats();
     _s.run(1000);
     _s.sim_debug_json();
     
+    // Calculate and print time elapsed
+    let duration = start.elapsed();
+    println!("Duration {:?}",duration);
+
     Ok(())
 }

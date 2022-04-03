@@ -8,10 +8,6 @@ This simulation looks to simulate human and animal evolution in different enviro
 To compile for release
 `cargo build --release`
 
-### Compile Options
-For runtime statistics
-`--features "benchmarking`
-
 ## Run commands
 run debug
 `cargo run`
