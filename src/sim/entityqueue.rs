@@ -48,15 +48,24 @@ impl EntityQueue
     }
     // For getting the entity entry
     // whose turn it is
-    pub fn pop(&self) -> QueueEntry
+    pub fn pop(&self) -> Option<QueueEntry>
     {
         // could cause an Error if queue is empty and returns None
         self.queue.pop_front()
     }
     // Used for adding a new entry to queue based on action cost
-    pub fn insert()
+    pub fn insert(&mut self, qe: QueueEntry)
     {
-        todo!();
+        let mut i = 0;
+        for entry in self.queue.iter()
+        {
+            if entry.get_action_cost() > qe.get_action_cost()
+            {
+                break;
+            }
+            i = i + 1;
+        }
+        self.queue.insert(i,qe);
     }
     // Used for removing entry if a action changes
     // or if an entity is removed
