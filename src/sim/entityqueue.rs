@@ -32,16 +32,26 @@ impl QueueEntry
 
 struct EntityQueue
 {
-    queue: Vector<QueueEntry>
+    // reference https://doc.rust-lang.org/std/collections/struct.VecDeque.html
+    // using this so entries can be popped from the front
+    queue: VecDeque<QueueEntry>
 }
 
 impl EntityQueue
 {
+    pub fn new() -> EntityQueue
+    {
+        EntityQueue
+        {
+            queue: VecDeque<QueueEntry>::new(),
+        }
+    }
     // For getting the entity entry
     // whose turn it is
-    pub fn pop()
+    pub fn pop(&self) -> QueueEntry
     {
-        todo!();
+        // could cause an Error if queue is empty and returns None
+        self.queue.pop_front()
     }
     // Used for adding a new entry to queue based on action cost
     pub fn insert()
@@ -61,6 +71,8 @@ mod tests
 {
     use super::*;
 
+    // QueueEntry Unit Tests
+    //----------------------
     #[test]
     fn can_get_eid()
     {
@@ -80,4 +92,7 @@ mod tests
         qe.update_action_cost(100);
         assert_eq!(qe.get_action_cost(),200);
     }
+
+    //Entity Queue Unit Tests
+    //-----------------------
 }
