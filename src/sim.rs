@@ -225,6 +225,7 @@ impl Sim {
     {
         let snap_interval: usize = 100;
 
+        
         for e in &self.entities
         {
             if e.has_tag("CAN_MOVE") 
@@ -232,6 +233,8 @@ impl Sim {
                 // Move code
             }
         }
+        // check if can reproduce
+        // check to harvest
 
         for d in 0..days
         {
