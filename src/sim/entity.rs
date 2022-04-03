@@ -56,6 +56,7 @@ pub struct Entity
     edible: bool,
     can_move_through: bool,
     can_harvest: bool,
+    tags: Vec<String>,
 }
 
 impl Entity
@@ -81,6 +82,7 @@ impl Entity
             edible: true,
             can_move_through: false,
             can_harvest: true,
+            tags: Vec::<String>::new(),
         }
     }
     // Loads a entity from json files in ./data/entity
@@ -154,6 +156,14 @@ impl Entity
     {
         &self.et
     }
+    pub fn has_tag(&self, tag: &str) -> bool
+    {
+        if self.tags.iter().any(|i| i==tag) 
+        {
+            return true
+        }
+        false
+    }
 }
 
 
@@ -183,6 +193,20 @@ mod tests
         let filepath = Path::new("./data/test/entity_test.json");
         let e = Entity::load(1, filepath);
         assert_eq!(102,e.get_y());
+    }
+    #[test]
+    fn has_tag_can_move()
+    {
+        let filepath = Path::new("./data/test/entity_test.json");
+        let e = Entity::load(1, filepath);
+        assert!(e.has_tag("CAN_MOVE")); 
+    }
+    #[test]
+    fn does_not_have_tag_can_see()
+    {
+        let filepath = Path::new("./data/test/entity_test.json");
+        let e = Entity::load(1, filepath);
+        assert!(!e.has_tag("CAN_SEE")); 
     }
     #[test]
     fn can_load_berry_bush()

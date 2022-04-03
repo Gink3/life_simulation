@@ -14,9 +14,9 @@ For runtime statistics
 
 ## Run commands
 run debug
-`.\debug\life_simulation.exe`
+`cargo run`
 run release
-`.\release\life_simulation.exe`
+`cargo run --release`
 
 ## File descriptions
 sim.rs -> Simulation structs and controller code
