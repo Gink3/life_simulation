@@ -16,17 +16,17 @@ impl QueueEntry
             action_cost: ac,
         }
     }
-    pub fn get_eid()
+    pub fn get_eid(&self) -> usize
     {
-        todo!();
+        self.eid
     }
-    pub fn get_action_cost()
+    pub fn get_action_cost(&self) -> usize
     {
-        todo!();
+        self.action_cost
     }
-    pub fn update_action_cost()
+    pub fn update_action_cost(&mut self, modifier: usize)
     {
-        todo!();
+        self.action_cost = self.action_cost - modifier;
     }
 }
 
@@ -53,5 +53,31 @@ impl EntityQueue
     pub fn remove()
     {
         todo!();
+    }
+}
+
+#[cfg(test)]
+mod tests
+{
+    use super::*;
+
+    #[test]
+    fn can_get_eid()
+    {
+        let qe = QueueEntry::new(11,200);
+        assert_eq!(qe.get_eid(),11);
+    }
+    #[test]
+    fn can_get_action_cost()
+    {
+        let qe = QueueEntry::new(11,200);
+        assert_eq!(qe.get_action_cost(),200);
+    }
+    #[test]
+    fn can_update_action_cost()
+    {
+        let mut qe = QueueEntry::new(11,200);
+        qe.update_action_cost(100);
+        assert_eq!(qe.get_action_cost(),200);
     }
 }
