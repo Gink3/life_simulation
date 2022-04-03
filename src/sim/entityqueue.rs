@@ -69,9 +69,18 @@ impl EntityQueue
     }
     // Used for removing entry if a action changes
     // or if an entity is removed
-    pub fn remove()
+    pub fn remove_by_eid(&mut self, id: usize)
     {
-        todo!();
+        let mut i = 0;
+        for entry in self.queue.iter()
+        {
+            if entry.get_eid() == id
+            {
+                self.queue.remove(i);
+                break;
+            }
+            i = i + 1;
+        }
     }
 }
 
