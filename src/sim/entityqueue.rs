@@ -65,7 +65,7 @@ impl EntityQueue
         let mut i = 0;
         if self.queue.is_empty()
         {
-            self.queue.push(qe);
+            self.queue.push_back(qe);
 
         } else
         {
@@ -121,7 +121,7 @@ mod tests
     {
         let mut qe = QueueEntry::new(11,200);
         qe.update_action_cost(100);
-        assert_eq!(qe.get_action_cost(),200);
+        assert_eq!(qe.get_action_cost(),100);
     }
 
     //Entity Queue Unit Tests
