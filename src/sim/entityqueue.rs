@@ -1,10 +1,15 @@
+use std::collections::VecDeque;
+
+use serde::{Serialize, Deserialize};
 
 
-struct QueueEntry
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct QueueEntry
 {
     eid: usize,
     action_cost: usize,
 }
+
 
 impl QueueEntry
 {
@@ -30,7 +35,8 @@ impl QueueEntry
     }
 }
 
-struct EntityQueue
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct EntityQueue
 {
     // reference https://doc.rust-lang.org/std/collections/struct.VecDeque.html
     // using this so entries can be popped from the front
@@ -43,12 +49,12 @@ impl EntityQueue
     {
         EntityQueue
         {
-            queue: VecDeque<QueueEntry>::new(),
+            queue: VecDeque::<QueueEntry>::new(),
         }
     }
     // For getting the entity entry
     // whose turn it is
-    pub fn pop(&self) -> Option<QueueEntry>
+    pub fn pop(&mut self) -> Option<QueueEntry>
     {
         // could cause an Error if queue is empty and returns None
         self.queue.pop_front()
@@ -120,4 +126,104 @@ mod tests
 
     //Entity Queue Unit Tests
     //-----------------------
+    #[test]
+    fn can_pop_single_entry()
+    {
+        let mut q = EntityQueue::new();
+        let qe = QueueEntry::new(11,200);
+        q.insert(qe);
+        let returned_value = q.pop().unwrap();
+        assert_eq!(returned_value.get_eid(),11);
+    }
+    #[test]
+    fn can_pop_multiple_entries()
+    {
+        let mut q = EntityQueue::new();
+        let qe1 = QueueEntry::new(11,200);
+        let qe2 = QueueEntry::new(12,200);
+        let qe3 = QueueEntry::new(13,200);
+        q.insert(qe1);
+        q.insert(qe2);
+        q.insert(qe3);
+        q.pop();
+        let returned_value = q.pop().unwrap();
+        assert_eq!(returned_value.get_eid(),12);
+    }
+    #[test]
+    fn pop_empty_queue()
+    {
+        let mut q = EntityQueue::new();
+        assert!(q.pop().is_none());
+    }
+    #[test]
+    fn insert_into_empty_queue()
+    {
+        let mut q = EntityQueue::new();
+        let qe = QueueEntry::new(11,200);
+        q.insert(qe);
+        assert_eq!(q.queue.len(),1);
+    }
+    #[test]
+    fn insert_different_action_into_nonempty_queue()
+    {
+        let mut q = EntityQueue::new();
+        let qe1 = QueueEntry::new(11,200);
+        let qe2 = QueueEntry::new(12,300);
+        let qe3 = QueueEntry::new(13,200);
+        q.insert(qe1);
+        q.insert(qe2);
+        q.insert(qe3);
+        q.pop();
+        q.pop();
+        let returned_value = q.pop().unwrap();
+        assert_eq!(returned_value.get_action_cost(),300);
+    }
+    #[test]
+    fn insert_same_action_into_nonempty_queue()
+    {
+        let mut q = EntityQueue::new();
+        let qe1 = QueueEntry::new(11,200);
+        let qe2 = QueueEntry::new(12,200);
+        let qe3 = QueueEntry::new(13,200);
+        q.insert(qe1);
+        q.insert(qe2);
+        q.insert(qe3);
+        q.pop();
+        q.pop();
+        let returned_value = q.pop().unwrap();
+        assert_eq!(returned_value.get_eid(), 13);
+
+    }
+    #[test]
+    fn can_remove()
+    {
+        let mut q = EntityQueue::new();
+        let qe1 = QueueEntry::new(11,200);
+        let qe2 = QueueEntry::new(12,200);
+        let qe3 = QueueEntry::new(13,200);
+        q.insert(qe1);
+        q.insert(qe2);
+        q.insert(qe3);
+        q.remove_by_eid(12);
+        q.pop();
+        let returned_value = q.pop().unwrap();
+        assert_ne!(returned_value.get_eid(), 12);
+    }
+    #[test]
+    fn can_remove_nonexistant_entry()
+    {
+        let mut q = EntityQueue::new();
+        let qe1 = QueueEntry::new(11,200);
+        let qe2 = QueueEntry::new(14,200);
+        let qe3 = QueueEntry::new(13,200);
+        q.insert(qe1);
+        q.insert(qe2);
+        q.insert(qe3);
+        q.remove_by_eid(12);
+        q.pop();
+        let returned_value = q.pop().unwrap();
+        assert_eq!(returned_value.get_eid(), 14);
+    }
+    
+
 }
