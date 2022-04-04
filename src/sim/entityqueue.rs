@@ -57,15 +57,22 @@ impl EntityQueue
     pub fn insert(&mut self, qe: QueueEntry)
     {
         let mut i = 0;
-        for entry in self.queue.iter()
+        if self.queue.is_empty()
         {
-            if entry.get_action_cost() > qe.get_action_cost()
+            self.queue.push(qe);
+
+        } else
+        {
+            for entry in self.queue.iter()
             {
-                break;
+                if entry.get_action_cost() > qe.get_action_cost()
+                {
+                    break;
+                }
+                i = i + 1;
             }
-            i = i + 1;
+            self.queue.insert(i,qe);
         }
-        self.queue.insert(i,qe);
     }
     // Used for removing entry if a action changes
     // or if an entity is removed
