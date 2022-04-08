@@ -25,6 +25,9 @@ use entity::{EntityType, Entity};
 use crate::config::Config;
 use crate::sim::world::tile::TileType;
 
+pub mod entityqueue;
+use crate::sim::entityqueue::EntityQueue;
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Sim {
     years: usize,
@@ -35,6 +38,7 @@ pub struct Sim {
     init_plants: usize,
     init_animals: usize,
     entities: Vec<Entity>,
+    queue: EntityQueue,
 }
 
 impl Sim {
@@ -58,6 +62,7 @@ impl Sim {
                 // init people
                 init_people: c.get_init_pe(),
                 entities: Vec::<Entity>::new(),
+                queue: EntityQueue::new(),
 
             };
         // Generate new world sim
@@ -76,6 +81,7 @@ impl Sim {
                 // init people
                 init_people: c.get_init_pe(),
                 entities: Vec::<Entity>::new(),
+                queue: EntityQueue::new(),
             };
         }
         // Generates entities
